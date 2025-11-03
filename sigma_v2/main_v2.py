@@ -41,13 +41,12 @@ def main():
     N_EPOCHS_LR_PHASE1 = 15
     N_EPOCHS_LR_PHASE2 = N_EPOCHS_LR_TOTAL - N_EPOCHS_LR_PHASE1
     
-    # Parâmetros de LR (baseados em _SIGMA.py)
+    # Parâmetros de LR
     LR_ADAM = 0.001
     LR_SGD = 0.01
     LR_SIGMA = 0.01
     
-    # *** NOVO: Weight decay padrão para todos os otimizadores ***
-    # Inspirado por sigma_v2.py
+    # *** Weight decay padrão para todos os otimizadores ***
     WD = 0.01 
     
     # Dados
