@@ -15,11 +15,13 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
     
     fig, axes = plt.subplots(2, 2, figsize=(18, 12))
     
+    # *** ATUALIZADO: Adicionado novo experimento Cíclico ***
     colors_nn = {
         'Adam (Baseline)': '#1f77b4',
         'Adam -> SGD+M': '#d62728',
-        'Adam -> SIGMA-D_v2': '#2ca02c', # Nome atualizado
-        'Adam -> SIGMA-C_v2': '#9467bd', # Nome atualizado
+        'Adam -> SIGMA-D_v2': '#2ca02c',
+        'Adam -> SIGMA-C_v2': '#9467bd',
+        'Cíclico (A->C)x2': '#ff7f0e' # Nova cor para o cíclico
     }
     
     markers_nn = {
@@ -27,6 +29,7 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
         'Adam -> SGD+M': 'v',
         'Adam -> SIGMA-D_v2': '^',
         'Adam -> SIGMA-C_v2': 'P',
+        'Cíclico (A->C)x2': 'X' # Novo marcador
     }
     
     # --- Plot 1: Acurácia no Teste ---
@@ -34,13 +37,19 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
     for name, history in results_nn.items():
         ax1.plot(history['test_acc'], 
                 label=name, 
-                color=colors_nn[name],
-                marker=markers_nn[name], 
+                color=colors_nn.get(name, 'black'), # .get() para segurança
+                marker=markers_nn.get(name, '.'), 
                 markersize=4,
                 linewidth=2)
     
-    ax1.axvline(x=n_epochs_phase1 - 0.5, color='gray', linestyle='--', 
-                linewidth=1.5, alpha=0.7, label='Troca de Otimizador')
+    # *** ATUALIZADO: Lógica para desenhar linhas de troca ***
+    ax1.axvline(x=n_epochs_phase1 - 0.5, color='gray', linestyle=':', 
+                linewidth=1.5, alpha=0.7, label='Troca (Híbridos 10/10)')
+    # Linhas para o cíclico
+    for i in [5, 10, 15]:
+         ax1.axvline(x=i - 0.5, color='#ff7f0e', linestyle='--', 
+                     linewidth=1.0, alpha=0.5)
+    
     ax1.set_xlabel('Época', fontsize=12)
     ax1.set_ylabel('Acurácia no Teste (%)', fontsize=12)
     ax1.set_title('Comparação de Acurácia: Híbridos v2 vs Baseline (Redes Neurais)', fontsize=14, fontweight='bold')
@@ -52,13 +61,17 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
     for name, history in results_nn.items():
         ax2.plot(history['test_loss'], 
                 label=name,
-                color=colors_nn[name],
-                marker=markers_nn[name], 
+                color=colors_nn.get(name, 'black'),
+                marker=markers_nn.get(name, '.'), 
                 markersize=4,
                 linewidth=2)
     
-    ax2.axvline(x=n_epochs_phase1 - 0.5, color='gray', linestyle='--', 
-                linewidth=1.5, alpha=0.7, label='Troca de Otimizador')
+    ax2.axvline(x=n_epochs_phase1 - 0.5, color='gray', linestyle=':', 
+                linewidth=1.5, alpha=0.7, label='Troca (Híbridos 10/10)')
+    for i in [5, 10, 15]:
+         ax2.axvline(x=i - 0.5, color='#ff7f0e', linestyle='--', 
+                     linewidth=1.0, alpha=0.5)
+                     
     ax2.set_xlabel('Época', fontsize=12)
     ax2.set_ylabel('Loss no Teste (escala log)', fontsize=12)
     ax2.set_title('Comparação de Loss v2 (Redes Neurais)', fontsize=14, fontweight='bold')
@@ -71,14 +84,18 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
     for name, history in results_nn.items():
         ax3.plot(history['train_loss'], 
                 label=name,
-                color=colors_nn[name],
-                marker=markers_nn[name], 
+                color=colors_nn.get(name, 'black'),
+                marker=markers_nn.get(name, '.'), 
                 markersize=3,
                 linewidth=2,
                 alpha=0.8)
     
-    ax3.axvline(x=n_epochs_phase1 - 0.5, color='gray', linestyle='--', 
+    ax3.axvline(x=n_epochs_phase1 - 0.5, color='gray', linestyle=':', 
                 linewidth=1.5, alpha=0.7)
+    for i in [5, 10, 15]:
+         ax3.axvline(x=i - 0.5, color='#ff7f0e', linestyle='--', 
+                     linewidth=1.0, alpha=0.5)
+                     
     ax3.set_xlabel('Época', fontsize=12)
     ax3.set_ylabel('Loss de Treino', fontsize=12)
     ax3.set_title('Convergência no Treino v2 (Redes Neurais)', fontsize=14, fontweight='bold')
@@ -89,7 +106,8 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
     ax4 = axes[1, 1]
     names_nn = list(times_nn.keys())
     time_values_nn = list(times_nn.values())
-    bars = ax4.barh(names_nn, time_values_nn, color=[colors_nn[n] for n in names_nn])
+    bar_colors = [colors_nn.get(n, 'gray') for n in names_nn]
+    bars = ax4.barh(names_nn, time_values_nn, color=bar_colors)
     
     for i, (bar, val) in enumerate(zip(bars, time_values_nn)):
         ax4.text(val + 1, i, f'{val:.1f}s', va='center', fontsize=10)
@@ -99,18 +117,18 @@ def generate_nn_plots(results_nn, times_nn, n_epochs_phase1):
     ax4.grid(axis='x', alpha=0.3)
     
     plt.tight_layout()
-    # *** MODIFICADO AQUI ***
     plt.savefig('sigma_hybrid_comparison_nn_v2.pdf', dpi=150, bbox_inches='tight')
     print("Gráfico salvo: 'sigma_hybrid_comparison_nn_v2.pdf'")
 
 # ========================================================================
-# VISUALIZAÇÃO - REGRESSÃO LOGÍSTICA (MODIFICADO PARA 2x2)
+# VISUALIZAÇÃO - REGRESSÃO LOGÍSTICA
 # ========================================================================
 
 def generate_lr_plots(results_lr, times_lr, n_epochs_phase1):
     """
     Gera e salva o gráfico 2x2 para os resultados da Regressão Logística.
     Salva como 'sigma_full_comparison_logistic_v2.pdf'.
+    (Este foi mantido como estava, sem o experimento cíclico, por clareza)
     """
     
     print("\nGerando gráficos de comparação (Regressão Logística - v2)...")
@@ -120,41 +138,24 @@ def generate_lr_plots(results_lr, times_lr, n_epochs_phase1):
     colors_lr = {
         'Adam (Puro)': '#1f77b4',
         'SGD+M (Puro)': '#ff7f0e',
-        'SIGMA-D_v2 (Puro)': '#2ca02c', # Nome atualizado
-        'SIGMA-C_v2 (Puro)': '#9467bd', # Nome atualizado
+        'SIGMA-D_v2 (Puro)': '#2ca02c',
+        'SIGMA-C_v2 (Puro)': '#9467bd',
         'Adam -> SGD+M': '#d62728',
-        'Adam -> SIGMA-D_v2': '#8c564b', # Nome atualizado
-        'Adam -> SIGMA-C_v2': '#e377c2', # Nome atualizado
+        'Adam -> SIGMA-D_v2': '#8c564b',
+        'Adam -> SIGMA-C_v2': '#e377c2',
     }
     
-    markers_lr = {
-        'Adam (Puro)': 'o',
-        'SGD+M (Puro)': 's',
-        'SIGMA-D_v2 (Puro)': '^',
-        'SIGMA-C_v2 (Puro)': 'P',
-        'Adam -> SGD+M': 'v',
-        'Adam -> SIGMA-D_v2': '>',
-        'Adam -> SIGMA-C_v2': '<',
-    }
-    
-    linestyles_lr = {
-        'Adam (Puro)': ':',
-        'SGD+M (Puro)': ':',
-        'SIGMA-D_v2 (Puro)': ':',
-        'SIGMA-C_v2 (Puro)': ':',
-        'Adam -> SGD+M': '-',
-        'Adam -> SIGMA-D_v2': '-',
-        'Adam -> SIGMA-C_v2': '-',
-    }
+    markers_lr = { k: 'o' if 'Puro' in k else '^' for k in colors_lr.keys() }
+    linestyles_lr = { k: ':' if 'Puro' in k else '-' for k in colors_lr.keys() }
     
     # --- Plot 1: Acurácia (axes2[0, 0]) ---
     ax1_lr = axes2[0, 0]
     for name, history in results_lr.items():
         ax1_lr.plot(history['test_acc'], 
                    label=name, 
-                   color=colors_lr[name],
-                   linestyle=linestyles_lr[name],
-                   marker=markers_lr[name], 
+                   color=colors_lr.get(name, 'black'),
+                   linestyle=linestyles_lr.get(name, '-'),
+                   marker=markers_lr.get(name, '.'), 
                    markersize=4,
                    linewidth=2)
     
@@ -171,9 +172,9 @@ def generate_lr_plots(results_lr, times_lr, n_epochs_phase1):
     for name, history in results_lr.items():
         ax2_lr.plot(history['test_loss'], 
                    label=name,
-                   color=colors_lr[name],
-                   linestyle=linestyles_lr[name],
-                   marker=markers_lr[name], 
+                   color=colors_lr.get(name, 'black'),
+                   linestyle=linestyles_lr.get(name, '-'),
+                   marker=markers_lr.get(name, '.'), 
                    markersize=4,
                    linewidth=2)
     
@@ -191,9 +192,9 @@ def generate_lr_plots(results_lr, times_lr, n_epochs_phase1):
     for name, history in results_lr.items():
         ax3_lr.plot(history['train_loss'], 
                    label=name,
-                   color=colors_lr[name],
-                   linestyle=linestyles_lr[name],
-                   marker=markers_lr[name], 
+                   color=colors_lr.get(name, 'black'),
+                   linestyle=linestyles_lr.get(name, '-'),
+                   marker=markers_lr.get(name, '.'), 
                    markersize=4,
                    linewidth=2)
     
@@ -210,7 +211,8 @@ def generate_lr_plots(results_lr, times_lr, n_epochs_phase1):
     ax4_lr = axes2[1, 1]
     names_lr = list(times_lr.keys())
     time_values_lr = list(times_lr.values())
-    bars = ax4_lr.barh(names_lr, time_values_lr, color=[colors_lr[n] for n in names_lr])
+    bar_colors_lr = [colors_lr.get(n, 'gray') for n in names_lr]
+    bars = ax4_lr.barh(names_lr, time_values_lr, color=bar_colors_lr)
     
     for i, (bar, val) in enumerate(zip(bars, time_values_lr)):
         ax4_lr.text(val + 1, i, f'{val:.1f}s', va='center', fontsize=10)
@@ -221,6 +223,5 @@ def generate_lr_plots(results_lr, times_lr, n_epochs_phase1):
 
     
     plt.tight_layout()
-    # *** MODIFICADO AQUI ***
     plt.savefig('sigma_full_comparison_logistic_v2.pdf', dpi=150, bbox_inches='tight')
     print("Gráfico salvo: 'sigma_full_comparison_logistic_v2.pdf'")

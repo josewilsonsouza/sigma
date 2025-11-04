@@ -11,6 +11,8 @@ Este script importa:
 
 Todos os otimizadores agora usam weight_decay para uma comparação
 mais justa (AdamW, SGDW, SIGMA-D_v2, SIGMA-C_v2).
+
+*** NOVO: Adicionado Experimento Cíclico (A->C->A->C) ***
 """
 
 import torch
@@ -41,12 +43,12 @@ def main():
     N_EPOCHS_LR_PHASE1 = 15
     N_EPOCHS_LR_PHASE2 = N_EPOCHS_LR_TOTAL - N_EPOCHS_LR_PHASE1
     
-    # Parâmetros de LR
+    # Parâmetros de LR (baseados em _SIGMA.py)
     LR_ADAM = 0.001
     LR_SGD = 0.01
     LR_SIGMA = 0.01
     
-    # *** Weight decay padrão para todos os otimizadores ***
+    # Weight decay padrão para todos os otimizadores
     WD = 0.01 
     
     # Dados
@@ -68,7 +70,6 @@ def main():
     
     # --- EXPERIMENTO 1: Adam (Baseline) ---
     model_adam = copy.deepcopy(base_model)
-    # *** ATUALIZADO para AdamW ***
     optimizer_adam = optim.Adam(model_adam.parameters(), lr=LR_ADAM, weight_decay=WD)
     
     history_adam, time_adam = run_experiment(
@@ -83,7 +84,6 @@ def main():
     
     # --- EXPERIMENTO 2: Híbrido (Adam → SGD+M) - GRUPO DE CONTROLE ---
     model_hybrid_sgd = copy.deepcopy(base_model)
-    # *** ATUALIZADO para AdamW / SGDW ***
     optimizer_adam_phase1_ctrl = optim.Adam(model_hybrid_sgd.parameters(), lr=LR_ADAM, weight_decay=WD)
     optimizer_sgd_phase2 = optim.SGD(model_hybrid_sgd.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
     
@@ -102,15 +102,12 @@ def main():
 
     # --- EXPERIMENTO 3: Híbrido (Adam → SIGMA-D_v2) ---
     model_hybrid_sigma_d = copy.deepcopy(base_model)
-    # *** ATUALIZADO para AdamW / SIGMA_D_v2 ***
     optimizer_adam_phase1_d = optim.Adam(model_hybrid_sigma_d.parameters(), lr=LR_ADAM, weight_decay=WD)
     optimizer_sigma_d = SIGMA_D_v2(
         model_hybrid_sigma_d.parameters(),
         lr=LR_SIGMA,
         beta=0.9,
-        alpha_min=0.1,
-        alpha_max=2.0,
-        weight_decay=WD # Adicionado
+        weight_decay=WD
     )
     
     history_hybrid_sigma_d, time_hybrid_sigma_d = run_experiment(
@@ -128,15 +125,12 @@ def main():
 
     # --- EXPERIMENTO 4: Híbrido (Adam → SIGMA-C_v2) ---
     model_hybrid_sigma_c = copy.deepcopy(base_model)
-    # *** ATUALIZADO para AdamW / SIGMA_C_v2 ***
     optimizer_adam_phase1_c = optim.Adam(model_hybrid_sigma_c.parameters(), lr=LR_ADAM, weight_decay=WD)
     optimizer_sigma_c = SIGMA_C_v2(
         model_hybrid_sigma_c.parameters(),
         lr=LR_SIGMA,
         beta=0.9,
-        alpha_min=0.1,
-        alpha_max=2.0,
-        weight_decay=WD # Adicionado
+        weight_decay=WD
     )
     
     history_hybrid_sigma_c, time_hybrid_sigma_c = run_experiment(
@@ -152,9 +146,33 @@ def main():
     results_nn['Adam -> SIGMA-C_v2'] = history_hybrid_sigma_c
     times_nn['Adam -> SIGMA-C_v2'] = time_hybrid_sigma_c
     
+    # --- EXPERIMENTO 5: Cíclico (Adam -> SIGMA-C_v2) x2 --- (NOVO)
+    model_cyclic = copy.deepcopy(base_model)
+    
+    # Configuração das 4 fases do otimizador
+    opt_fase1 = optim.Adam(model_cyclic.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt_fase2 = SIGMA_C_v2(model_cyclic.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    opt_fase3 = optim.Adam(model_cyclic.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt_fase4 = SIGMA_C_v2(model_cyclic.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    
+    history_cyclic, time_cyclic = run_experiment(
+        experiment_name="Cíclico (A->C)x2",
+        model=model_cyclic,
+        optimizer_config=[
+            (opt_fase1, 5), # 5 épocas Adam
+            (opt_fase2, 5), # 5 épocas SIGMA-C
+            (opt_fase3, 5), # 5 épocas Adam
+            (opt_fase4, 5)  # 5 épocas SIGMA-C
+        ],
+        train_loader=train_loader, test_loader=test_loader,
+        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_NN_TOTAL
+    )
+    results_nn['Cíclico (A->C)x2'] = history_cyclic
+    times_nn['Cíclico (A->C)x2'] = time_cyclic
     
     # =======================================================================
     # PARTE 2: EXPERIMENTOS COM REGRESSÃO LOGÍSTICA
+    # (Sem alteração, mantido como estava)
     # =======================================================================
     
     print("\n" + "="*80)
@@ -309,26 +327,29 @@ def main():
     baseline_acc_nn = results_nn['Adam -> SGD+M']['test_acc'][-1]
     acc_d_nn = results_nn['Adam -> SIGMA-D_v2']['test_acc'][-1]
     acc_c_nn = results_nn['Adam -> SIGMA-C_v2']['test_acc'][-1]
+    acc_cyclic_nn = results_nn['Cíclico (A->C)x2']['test_acc'][-1]
     
     diff_d_nn = acc_d_nn - baseline_acc_nn
     diff_c_nn = acc_c_nn - baseline_acc_nn
+    diff_cyclic_nn = acc_cyclic_nn - baseline_acc_nn
     
     print(f"Híbrido (Adam -> SIGMA-D_v2) vs (Adam -> SGD+M): {diff_d_nn:+.2f}% {'✓' if diff_d_nn > 0 else '✗'}")
     print(f"Híbrido (Adam -> SIGMA-C_v2) vs (Adam -> SGD+M): {diff_c_nn:+.2f}% {'✓' if diff_c_nn > 0 else '✗'}")
+    print(f"Cíclico (A->C)x2            vs (Adam -> SGD+M): {diff_cyclic_nn:+.2f}% {'✓' if diff_cyclic_nn > 0 else '✗'}")
 
     
     print("\n" + "="*80)
     print("RESUMO FINAL - REGRESSÃO LOGÍSTICA (v2) (PROBLEMA CONVEXO)")
     print("="*80)
     
-    print(f"\n{'Otimizador':<20} | {'Acc Final':<10} | {'Loss Final':<11} | {'Tempo (s)':<10}")
-    print("-" * 65)
+    print(f"\n{'Otimizador':<25} | {'Acc Final':<10} | {'Loss Final':<11} | {'Tempo (s)':<10}")
+    print("-" * 70)
     
     for name in results_lr.keys():
         acc_final = results_lr[name]['test_acc'][-1]
         loss_final = results_lr[name]['train_loss'][-1]
         time_final = times_lr[name]
-        print(f"{name:<20} | {acc_final:>9.2f}% | {loss_final:>10.6f} | {time_final:>9.2f}s")
+        print(f"{name:<25} | {acc_final:>9.2f}% | {loss_final:>10.6f} | {time_final:>9.2f}s")
 
     print("\n" + "-"*80)
     print("ANÁLISE (v2) (Regressão Logística)")
