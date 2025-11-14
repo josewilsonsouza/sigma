@@ -1,0 +1,792 @@
+================================================================================
+PARTE 1: EXPERIMENTOS v3 COM REDES NEURAIS (NÃO-CONVEXO)
+================================================================================
+
+================================================================================
+TREINANDO: [NN] Adam (Puro)
+================================================================================
+
+--- Única: Adam ---
+Época [ 1/20] | Train Loss: 0.3593 | Test Loss: 0.2189 | Test Acc: 93.98%
+Época [ 2/20] | Train Loss: 0.2032 | Test Loss: 0.1722 | Test Acc: 95.38%
+Época [ 3/20] | Train Loss: 0.1754 | Test Loss: 0.1510 | Test Acc: 95.80%
+Época [ 4/20] | Train Loss: 0.1635 | Test Loss: 0.1612 | Test Acc: 95.54%
+Época [ 5/20] | Train Loss: 0.1580 | Test Loss: 0.1452 | Test Acc: 95.88%
+Época [ 6/20] | Train Loss: 0.1524 | Test Loss: 0.1429 | Test Acc: 96.20%
+Época [ 7/20] | Train Loss: 0.1495 | Test Loss: 0.1407 | Test Acc: 96.29%
+Época [ 8/20] | Train Loss: 0.1465 | Test Loss: 0.1420 | Test Acc: 96.11%
+Época [ 9/20] | Train Loss: 0.1458 | Test Loss: 0.1471 | Test Acc: 96.13%
+Época [10/20] | Train Loss: 0.1451 | Test Loss: 0.1361 | Test Acc: 96.36%
+Época [11/20] | Train Loss: 0.1444 | Test Loss: 0.1369 | Test Acc: 96.34%
+Época [12/20] | Train Loss: 0.1453 | Test Loss: 0.1490 | Test Acc: 95.86%
+Época [13/20] | Train Loss: 0.1417 | Test Loss: 0.1358 | Test Acc: 96.28%
+Época [14/20] | Train Loss: 0.1437 | Test Loss: 0.1328 | Test Acc: 96.55%
+Época [15/20] | Train Loss: 0.1411 | Test Loss: 0.1556 | Test Acc: 95.56%
+Época [16/20] | Train Loss: 0.1398 | Test Loss: 0.1347 | Test Acc: 96.40%
+Época [17/20] | Train Loss: 0.1407 | Test Loss: 0.1400 | Test Acc: 96.28%
+Época [18/20] | Train Loss: 0.1405 | Test Loss: 0.1364 | Test Acc: 96.21%
+Época [19/20] | Train Loss: 0.1388 | Test Loss: 0.1379 | Test Acc: 96.38%
+Época [20/20] | Train Loss: 0.1379 | Test Loss: 0.1405 | Test Acc: 96.05%
+
+--- [NN] Adam (Puro) concluído em 225.79s ---
+
+================================================================================
+TREINANDO: [NN] SGD+M (Puro)
+================================================================================
+
+--- Única: SGD ---
+Época [ 1/20] | Train Loss: 0.4724 | Test Loss: 0.2282 | Test Acc: 93.67%
+Época [ 2/20] | Train Loss: 0.2093 | Test Loss: 0.1772 | Test Acc: 95.22%
+Época [ 3/20] | Train Loss: 0.1729 | Test Loss: 0.1591 | Test Acc: 95.77%
+Época [ 4/20] | Train Loss: 0.1586 | Test Loss: 0.1528 | Test Acc: 95.83%
+Época [ 5/20] | Train Loss: 0.1484 | Test Loss: 0.1442 | Test Acc: 95.96%
+Época [ 6/20] | Train Loss: 0.1421 | Test Loss: 0.1475 | Test Acc: 95.85%
+Época [ 7/20] | Train Loss: 0.1385 | Test Loss: 0.1310 | Test Acc: 96.59%
+Época [ 8/20] | Train Loss: 0.1343 | Test Loss: 0.1355 | Test Acc: 96.56%
+Época [ 9/20] | Train Loss: 0.1315 | Test Loss: 0.1292 | Test Acc: 96.61%
+Época [10/20] | Train Loss: 0.1298 | Test Loss: 0.1289 | Test Acc: 96.76%
+Época [11/20] | Train Loss: 0.1286 | Test Loss: 0.1276 | Test Acc: 96.67%
+Época [12/20] | Train Loss: 0.1268 | Test Loss: 0.1231 | Test Acc: 96.76%
+Época [13/20] | Train Loss: 0.1278 | Test Loss: 0.1215 | Test Acc: 96.77%
+Época [14/20] | Train Loss: 0.1248 | Test Loss: 0.1226 | Test Acc: 96.81%
+Época [15/20] | Train Loss: 0.1256 | Test Loss: 0.1231 | Test Acc: 96.90%
+Época [16/20] | Train Loss: 0.1248 | Test Loss: 0.1231 | Test Acc: 96.88%
+Época [17/20] | Train Loss: 0.1240 | Test Loss: 0.1248 | Test Acc: 96.56%
+Época [18/20] | Train Loss: 0.1252 | Test Loss: 0.1235 | Test Acc: 96.80%
+Época [19/20] | Train Loss: 0.1240 | Test Loss: 0.1217 | Test Acc: 96.84%
+Época [20/20] | Train Loss: 0.1217 | Test Loss: 0.1224 | Test Acc: 96.78%
+
+--- [NN] SGD+M (Puro) concluído em 215.43s ---
+
+================================================================================
+TREINANDO: [NN] SIGMA-D_v2 (Puro)
+================================================================================
+
+--- Única: SIGMA_D_v2 ---
+Época [ 1/20] | Train Loss: 1.6267 | Test Loss: 0.8220 | Test Acc: 82.20%
+Época [ 2/20] | Train Loss: 0.6114 | Test Loss: 0.4686 | Test Acc: 87.72%
+Época [ 3/20] | Train Loss: 0.4430 | Test Loss: 0.3906 | Test Acc: 89.36%
+Época [ 4/20] | Train Loss: 0.3903 | Test Loss: 0.3556 | Test Acc: 90.12%
+Época [ 5/20] | Train Loss: 0.3635 | Test Loss: 0.3351 | Test Acc: 90.67%
+Época [ 6/20] | Train Loss: 0.3468 | Test Loss: 0.3235 | Test Acc: 90.98%
+Época [ 7/20] | Train Loss: 0.3352 | Test Loss: 0.3155 | Test Acc: 91.23%
+Época [ 8/20] | Train Loss: 0.3266 | Test Loss: 0.3080 | Test Acc: 91.59%
+Época [ 9/20] | Train Loss: 0.3199 | Test Loss: 0.3021 | Test Acc: 91.66%
+Época [10/20] | Train Loss: 0.3141 | Test Loss: 0.2989 | Test Acc: 91.81%
+Época [11/20] | Train Loss: 0.3092 | Test Loss: 0.2948 | Test Acc: 92.05%
+Época [12/20] | Train Loss: 0.3053 | Test Loss: 0.2911 | Test Acc: 92.07%
+Época [13/20] | Train Loss: 0.3017 | Test Loss: 0.2874 | Test Acc: 92.07%
+Época [14/20] | Train Loss: 0.2981 | Test Loss: 0.2859 | Test Acc: 92.28%
+Época [15/20] | Train Loss: 0.2950 | Test Loss: 0.2820 | Test Acc: 92.32%
+Época [16/20] | Train Loss: 0.2923 | Test Loss: 0.2824 | Test Acc: 92.47%
+Época [17/20] | Train Loss: 0.2900 | Test Loss: 0.2784 | Test Acc: 92.48%
+Época [18/20] | Train Loss: 0.2870 | Test Loss: 0.2758 | Test Acc: 92.49%
+Época [19/20] | Train Loss: 0.2846 | Test Loss: 0.2733 | Test Acc: 92.59%
+Época [20/20] | Train Loss: 0.2824 | Test Loss: 0.2725 | Test Acc: 92.61%
+
+--- [NN] SIGMA-D_v2 (Puro) concluído em 227.24s ---
+
+================================================================================
+TREINANDO: [NN] SIGMA-C_v2 (Puro)
+================================================================================
+
+--- Única: SIGMA_C_v2 ---
+Época [ 1/20] | Train Loss: 1.2397 | Test Loss: 0.5211 | Test Acc: 86.61%
+Época [ 2/20] | Train Loss: 0.4367 | Test Loss: 0.3589 | Test Acc: 89.95%
+Época [ 3/20] | Train Loss: 0.3488 | Test Loss: 0.3127 | Test Acc: 91.21%
+Época [ 4/20] | Train Loss: 0.3135 | Test Loss: 0.2883 | Test Acc: 91.99%
+Época [ 5/20] | Train Loss: 0.2908 | Test Loss: 0.2701 | Test Acc: 92.27%
+Época [ 6/20] | Train Loss: 0.2737 | Test Loss: 0.2551 | Test Acc: 92.70%
+Época [ 7/20] | Train Loss: 0.2592 | Test Loss: 0.2445 | Test Acc: 93.12%
+Época [ 8/20] | Train Loss: 0.2467 | Test Loss: 0.2326 | Test Acc: 93.43%
+Época [ 9/20] | Train Loss: 0.2361 | Test Loss: 0.2238 | Test Acc: 93.77%
+Época [10/20] | Train Loss: 0.2261 | Test Loss: 0.2172 | Test Acc: 94.00%
+Época [11/20] | Train Loss: 0.2173 | Test Loss: 0.2083 | Test Acc: 94.11%
+Época [12/20] | Train Loss: 0.2099 | Test Loss: 0.2017 | Test Acc: 94.45%
+Época [13/20] | Train Loss: 0.2032 | Test Loss: 0.1955 | Test Acc: 94.50%
+Época [14/20] | Train Loss: 0.1971 | Test Loss: 0.1918 | Test Acc: 94.64%
+Época [15/20] | Train Loss: 0.1916 | Test Loss: 0.1862 | Test Acc: 94.69%
+Época [16/20] | Train Loss: 0.1869 | Test Loss: 0.1827 | Test Acc: 94.96%
+Época [17/20] | Train Loss: 0.1825 | Test Loss: 0.1776 | Test Acc: 95.01%
+Época [18/20] | Train Loss: 0.1787 | Test Loss: 0.1786 | Test Acc: 94.91%
+Época [19/20] | Train Loss: 0.1750 | Test Loss: 0.1722 | Test Acc: 95.34%
+Época [20/20] | Train Loss: 0.1718 | Test Loss: 0.1722 | Test Acc: 95.26%
+
+--- [NN] SIGMA-C_v2 (Puro) concluído em 259.85s ---
+
+================================================================================
+TREINANDO: [NN] Adam -> SGD+M
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/20] | Train Loss: 0.3663 | Test Loss: 0.2119 | Test Acc: 94.03%
+Época [ 2/20] | Train Loss: 0.2022 | Test Loss: 0.1791 | Test Acc: 94.99%
+Época [ 3/20] | Train Loss: 0.1760 | Test Loss: 0.1629 | Test Acc: 95.46%
+Época [ 4/20] | Train Loss: 0.1610 | Test Loss: 0.1436 | Test Acc: 96.00%
+Época [ 5/20] | Train Loss: 0.1563 | Test Loss: 0.1454 | Test Acc: 96.07%
+Época [ 6/20] | Train Loss: 0.1532 | Test Loss: 0.1428 | Test Acc: 96.09%
+Época [ 7/20] | Train Loss: 0.1505 | Test Loss: 0.1415 | Test Acc: 96.22%
+Época [ 8/20] | Train Loss: 0.1469 | Test Loss: 0.1504 | Test Acc: 95.93%
+Época [ 9/20] | Train Loss: 0.1452 | Test Loss: 0.1384 | Test Acc: 96.09%
+Época [10/20] | Train Loss: 0.1438 | Test Loss: 0.1347 | Test Acc: 96.43%
+
+--- Fase 2: SGD ---
+Época [11/20] | Train Loss: 0.1266 | Test Loss: 0.1234 | Test Acc: 96.72%
+Época [12/20] | Train Loss: 0.1259 | Test Loss: 0.1241 | Test Acc: 96.86%
+Época [13/20] | Train Loss: 0.1241 | Test Loss: 0.1240 | Test Acc: 96.80%
+Época [14/20] | Train Loss: 0.1243 | Test Loss: 0.1255 | Test Acc: 96.65%
+Época [15/20] | Train Loss: 0.1232 | Test Loss: 0.1254 | Test Acc: 96.70%
+Época [16/20] | Train Loss: 0.1248 | Test Loss: 0.1247 | Test Acc: 96.70%
+Época [17/20] | Train Loss: 0.1245 | Test Loss: 0.1232 | Test Acc: 96.78%
+Época [18/20] | Train Loss: 0.1237 | Test Loss: 0.1192 | Test Acc: 96.80%
+Época [19/20] | Train Loss: 0.1227 | Test Loss: 0.1354 | Test Acc: 96.50%
+Época [20/20] | Train Loss: 0.1227 | Test Loss: 0.1287 | Test Acc: 96.72%
+
+--- [NN] Adam -> SGD+M concluído em 216.24s ---
+
+================================================================================
+TREINANDO: [NN] Adam -> SIGMA-D_v2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/20] | Train Loss: 0.3633 | Test Loss: 0.2134 | Test Acc: 93.84%
+Época [ 2/20] | Train Loss: 0.2007 | Test Loss: 0.1693 | Test Acc: 95.19%
+Época [ 3/20] | Train Loss: 0.1748 | Test Loss: 0.1514 | Test Acc: 95.64%
+Época [ 4/20] | Train Loss: 0.1632 | Test Loss: 0.1444 | Test Acc: 95.95%
+Época [ 5/20] | Train Loss: 0.1557 | Test Loss: 0.1474 | Test Acc: 96.03%
+Época [ 6/20] | Train Loss: 0.1536 | Test Loss: 0.1529 | Test Acc: 95.70%
+Época [ 7/20] | Train Loss: 0.1502 | Test Loss: 0.1329 | Test Acc: 96.48%
+Época [ 8/20] | Train Loss: 0.1456 | Test Loss: 0.1458 | Test Acc: 96.11%
+Época [ 9/20] | Train Loss: 0.1461 | Test Loss: 0.1370 | Test Acc: 96.20%
+Época [10/20] | Train Loss: 0.1443 | Test Loss: 0.1348 | Test Acc: 96.41%
+
+--- Fase 2: SIGMA_D_v2 ---
+Época [11/20] | Train Loss: 0.1253 | Test Loss: 0.1267 | Test Acc: 96.85%
+Época [12/20] | Train Loss: 0.1269 | Test Loss: 0.1304 | Test Acc: 96.82%
+Época [13/20] | Train Loss: 0.1313 | Test Loss: 0.1346 | Test Acc: 96.72%
+Época [14/20] | Train Loss: 0.1357 | Test Loss: 0.1389 | Test Acc: 96.63%
+Época [15/20] | Train Loss: 0.1399 | Test Loss: 0.1425 | Test Acc: 96.60%
+Época [16/20] | Train Loss: 0.1436 | Test Loss: 0.1453 | Test Acc: 96.57%
+Época [17/20] | Train Loss: 0.1471 | Test Loss: 0.1480 | Test Acc: 96.50%
+Época [18/20] | Train Loss: 0.1503 | Test Loss: 0.1507 | Test Acc: 96.48%
+Época [19/20] | Train Loss: 0.1531 | Test Loss: 0.1528 | Test Acc: 96.43%
+Época [20/20] | Train Loss: 0.1558 | Test Loss: 0.1554 | Test Acc: 96.35%
+
+--- [NN] Adam -> SIGMA-D_v2 concluído em 223.44s ---
+
+================================================================================
+TREINANDO: [NN] Adam -> SIGMA-C_v2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/20] | Train Loss: 0.3632 | Test Loss: 0.2163 | Test Acc: 93.75%
+Época [ 2/20] | Train Loss: 0.2023 | Test Loss: 0.1747 | Test Acc: 95.29%
+Época [ 3/20] | Train Loss: 0.1768 | Test Loss: 0.1545 | Test Acc: 95.87%
+Época [ 4/20] | Train Loss: 0.1649 | Test Loss: 0.1588 | Test Acc: 95.57%
+Época [ 5/20] | Train Loss: 0.1577 | Test Loss: 0.1367 | Test Acc: 96.37%
+Época [ 6/20] | Train Loss: 0.1520 | Test Loss: 0.1397 | Test Acc: 96.30%
+Época [ 7/20] | Train Loss: 0.1495 | Test Loss: 0.1436 | Test Acc: 96.11%
+Época [ 8/20] | Train Loss: 0.1475 | Test Loss: 0.1368 | Test Acc: 96.21%
+Época [ 9/20] | Train Loss: 0.1483 | Test Loss: 0.1456 | Test Acc: 96.12%
+Época [10/20] | Train Loss: 0.1446 | Test Loss: 0.1355 | Test Acc: 96.19%
+
+--- Fase 2: SIGMA_C_v2 ---
+Época [11/20] | Train Loss: 0.1201 | Test Loss: 0.1196 | Test Acc: 96.96%
+Época [12/20] | Train Loss: 0.1169 | Test Loss: 0.1200 | Test Acc: 96.98%
+Época [13/20] | Train Loss: 0.1162 | Test Loss: 0.1179 | Test Acc: 97.05%
+Época [14/20] | Train Loss: 0.1159 | Test Loss: 0.1183 | Test Acc: 97.08%
+Época [15/20] | Train Loss: 0.1156 | Test Loss: 0.1182 | Test Acc: 97.05%
+Época [16/20] | Train Loss: 0.1152 | Test Loss: 0.1184 | Test Acc: 97.04%
+Época [17/20] | Train Loss: 0.1151 | Test Loss: 0.1175 | Test Acc: 97.08%
+Época [18/20] | Train Loss: 0.1150 | Test Loss: 0.1174 | Test Acc: 97.14%
+Época [19/20] | Train Loss: 0.1148 | Test Loss: 0.1172 | Test Acc: 97.12%
+Época [20/20] | Train Loss: 0.1146 | Test Loss: 0.1174 | Test Acc: 97.12%
+
+--- [NN] Adam -> SIGMA-C_v2 concluído em 239.97s ---
+
+================================================================================
+TREINANDO: [NN] Cíclico (A->S)x2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/20] | Train Loss: 0.3625 | Test Loss: 0.2087 | Test Acc: 94.12%
+Época [ 2/20] | Train Loss: 0.2037 | Test Loss: 0.1724 | Test Acc: 95.11%
+Época [ 3/20] | Train Loss: 0.1757 | Test Loss: 0.1676 | Test Acc: 95.43%
+Época [ 4/20] | Train Loss: 0.1673 | Test Loss: 0.1661 | Test Acc: 95.35%
+Época [ 5/20] | Train Loss: 0.1589 | Test Loss: 0.1413 | Test Acc: 96.21%
+
+--- Fase 2: SGD ---
+Época [ 6/20] | Train Loss: 0.1331 | Test Loss: 0.1301 | Test Acc: 96.39%
+Época [ 7/20] | Train Loss: 0.1299 | Test Loss: 0.1239 | Test Acc: 96.97%
+Época [ 8/20] | Train Loss: 0.1276 | Test Loss: 0.1262 | Test Acc: 96.82%
+Época [ 9/20] | Train Loss: 0.1268 | Test Loss: 0.1282 | Test Acc: 96.48%
+Época [10/20] | Train Loss: 0.1258 | Test Loss: 0.1295 | Test Acc: 96.70%
+
+--- Fase 3: Adam ---
+Época [11/20] | Train Loss: 0.1452 | Test Loss: 0.1314 | Test Acc: 96.46%
+Época [12/20] | Train Loss: 0.1433 | Test Loss: 0.1341 | Test Acc: 96.44%
+Época [13/20] | Train Loss: 0.1427 | Test Loss: 0.1341 | Test Acc: 96.41%
+Época [14/20] | Train Loss: 0.1421 | Test Loss: 0.1408 | Test Acc: 96.09%
+Época [15/20] | Train Loss: 0.1418 | Test Loss: 0.1351 | Test Acc: 96.51%
+
+--- Fase 4: SGD ---
+Época [16/20] | Train Loss: 0.1255 | Test Loss: 0.1230 | Test Acc: 96.63%
+Época [17/20] | Train Loss: 0.1234 | Test Loss: 0.1293 | Test Acc: 96.61%
+Época [18/20] | Train Loss: 0.1231 | Test Loss: 0.1268 | Test Acc: 96.99%
+Época [19/20] | Train Loss: 0.1218 | Test Loss: 0.1217 | Test Acc: 96.87%
+Época [20/20] | Train Loss: 0.1227 | Test Loss: 0.1199 | Test Acc: 96.86%
+
+--- [NN] Cíclico (A->S)x2 concluído em 216.55s ---
+
+================================================================================
+TREINANDO: [NN] Cíclico (A->D)x2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/20] | Train Loss: 0.3632 | Test Loss: 0.2113 | Test Acc: 93.84%
+Época [ 2/20] | Train Loss: 0.2041 | Test Loss: 0.1863 | Test Acc: 94.60%
+Época [ 3/20] | Train Loss: 0.1752 | Test Loss: 0.1544 | Test Acc: 95.77%
+Época [ 4/20] | Train Loss: 0.1648 | Test Loss: 0.1523 | Test Acc: 96.02%
+Época [ 5/20] | Train Loss: 0.1581 | Test Loss: 0.1412 | Test Acc: 96.11%
+
+--- Fase 2: SIGMA_D_v2 ---
+Época [ 6/20] | Train Loss: 0.1309 | Test Loss: 0.1323 | Test Acc: 96.54%
+Época [ 7/20] | Train Loss: 0.1323 | Test Loss: 0.1348 | Test Acc: 96.64%
+Época [ 8/20] | Train Loss: 0.1361 | Test Loss: 0.1388 | Test Acc: 96.49%
+Época [ 9/20] | Train Loss: 0.1399 | Test Loss: 0.1419 | Test Acc: 96.51%
+Época [10/20] | Train Loss: 0.1440 | Test Loss: 0.1454 | Test Acc: 96.42%
+
+--- Fase 3: Adam ---
+Época [11/20] | Train Loss: 0.1572 | Test Loss: 0.1429 | Test Acc: 96.25%
+Época [12/20] | Train Loss: 0.1488 | Test Loss: 0.1542 | Test Acc: 95.38%
+Época [13/20] | Train Loss: 0.1466 | Test Loss: 0.1363 | Test Acc: 96.42%
+Época [14/20] | Train Loss: 0.1449 | Test Loss: 0.1412 | Test Acc: 96.41%
+Época [15/20] | Train Loss: 0.1432 | Test Loss: 0.1335 | Test Acc: 96.54%
+
+--- Fase 4: SIGMA_D_v2 ---
+Época [16/20] | Train Loss: 0.1229 | Test Loss: 0.1252 | Test Acc: 96.72%
+Época [17/20] | Train Loss: 0.1253 | Test Loss: 0.1288 | Test Acc: 96.64%
+Época [18/20] | Train Loss: 0.1299 | Test Loss: 0.1334 | Test Acc: 96.70%
+Época [19/20] | Train Loss: 0.1343 | Test Loss: 0.1368 | Test Acc: 96.57%
+Época [20/20] | Train Loss: 0.1385 | Test Loss: 0.1408 | Test Acc: 96.53%
+
+--- [NN] Cíclico (A->D)x2 concluído em 228.61s ---
+
+================================================================================
+TREINANDO: [NN] Cíclico (A->C)x2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/20] | Train Loss: 0.3630 | Test Loss: 0.2196 | Test Acc: 93.64%
+Época [ 2/20] | Train Loss: 0.2051 | Test Loss: 0.1843 | Test Acc: 94.87%
+Época [ 3/20] | Train Loss: 0.1789 | Test Loss: 0.1575 | Test Acc: 95.57%
+Época [ 4/20] | Train Loss: 0.1636 | Test Loss: 0.1449 | Test Acc: 95.92%
+Época [ 5/20] | Train Loss: 0.1578 | Test Loss: 0.1708 | Test Acc: 95.23%
+
+--- Fase 2: SIGMA_C_v2 ---
+Época [ 6/20] | Train Loss: 0.1293 | Test Loss: 0.1290 | Test Acc: 96.47%
+Época [ 7/20] | Train Loss: 0.1240 | Test Loss: 0.1269 | Test Acc: 96.61%
+Época [ 8/20] | Train Loss: 0.1228 | Test Loss: 0.1265 | Test Acc: 96.65%
+Época [ 9/20] | Train Loss: 0.1219 | Test Loss: 0.1247 | Test Acc: 96.77%
+Época [10/20] | Train Loss: 0.1215 | Test Loss: 0.1240 | Test Acc: 96.76%
+
+--- Fase 3: Adam ---
+Época [11/20] | Train Loss: 0.1513 | Test Loss: 0.1630 | Test Acc: 95.32%
+Época [12/20] | Train Loss: 0.1464 | Test Loss: 0.1436 | Test Acc: 95.90%
+Época [13/20] | Train Loss: 0.1462 | Test Loss: 0.1565 | Test Acc: 95.60%
+Época [14/20] | Train Loss: 0.1446 | Test Loss: 0.1348 | Test Acc: 96.19%
+Época [15/20] | Train Loss: 0.1439 | Test Loss: 0.1324 | Test Acc: 96.48%
+
+--- Fase 4: SIGMA_C_v2 ---
+Época [16/20] | Train Loss: 0.1196 | Test Loss: 0.1187 | Test Acc: 96.91%
+Época [17/20] | Train Loss: 0.1168 | Test Loss: 0.1182 | Test Acc: 96.89%
+Época [18/20] | Train Loss: 0.1161 | Test Loss: 0.1187 | Test Acc: 96.94%
+Época [19/20] | Train Loss: 0.1159 | Test Loss: 0.1181 | Test Acc: 97.15%
+Época [20/20] | Train Loss: 0.1155 | Test Loss: 0.1181 | Test Acc: 97.13%
+
+--- [NN] Cíclico (A->C)x2 concluído em 251.45s ---
+
+================================================================================
+PARTE 2: EXPERIMENTOS v3 COM REGRESSÃO LOGÍSTICA (PROBLEMA CONVEXO)
+================================================================================
+
+================================================================================
+TREINANDO: [LR] Adam (Puro)
+================================================================================
+
+--- Única: Adam ---
+Época [ 1/30] | Train Loss: 0.4437 | Test Loss: 0.3175 | Test Acc: 90.94%
+Época [ 2/30] | Train Loss: 0.3139 | Test Loss: 0.2949 | Test Acc: 91.56%
+Época [ 3/30] | Train Loss: 0.3040 | Test Loss: 0.2891 | Test Acc: 91.88%
+Época [ 4/30] | Train Loss: 0.3011 | Test Loss: 0.2885 | Test Acc: 91.86%
+Época [ 5/30] | Train Loss: 0.3005 | Test Loss: 0.2924 | Test Acc: 91.79%
+Época [ 6/30] | Train Loss: 0.2985 | Test Loss: 0.2954 | Test Acc: 91.72%
+Época [ 7/30] | Train Loss: 0.2997 | Test Loss: 0.2851 | Test Acc: 92.00%
+Época [ 8/30] | Train Loss: 0.2993 | Test Loss: 0.2914 | Test Acc: 91.79%
+Época [ 9/30] | Train Loss: 0.2995 | Test Loss: 0.2880 | Test Acc: 91.80%
+Época [10/30] | Train Loss: 0.2986 | Test Loss: 0.2974 | Test Acc: 91.71%
+Época [11/30] | Train Loss: 0.2990 | Test Loss: 0.2878 | Test Acc: 91.83%
+Época [12/30] | Train Loss: 0.2982 | Test Loss: 0.2944 | Test Acc: 91.74%
+Época [13/30] | Train Loss: 0.2985 | Test Loss: 0.2880 | Test Acc: 91.79%
+Época [14/30] | Train Loss: 0.2986 | Test Loss: 0.2872 | Test Acc: 92.02%
+Época [15/30] | Train Loss: 0.2995 | Test Loss: 0.2863 | Test Acc: 91.96%
+Época [16/30] | Train Loss: 0.2986 | Test Loss: 0.2932 | Test Acc: 91.90%
+Época [17/30] | Train Loss: 0.2984 | Test Loss: 0.2936 | Test Acc: 91.67%
+Época [18/30] | Train Loss: 0.2996 | Test Loss: 0.2886 | Test Acc: 91.82%
+Época [19/30] | Train Loss: 0.2993 | Test Loss: 0.2850 | Test Acc: 91.98%
+Época [20/30] | Train Loss: 0.2992 | Test Loss: 0.2901 | Test Acc: 91.60%
+Época [21/30] | Train Loss: 0.2980 | Test Loss: 0.2876 | Test Acc: 91.78%
+Época [22/30] | Train Loss: 0.2995 | Test Loss: 0.2902 | Test Acc: 91.61%
+Época [23/30] | Train Loss: 0.2990 | Test Loss: 0.2914 | Test Acc: 91.56%
+Época [24/30] | Train Loss: 0.2985 | Test Loss: 0.2851 | Test Acc: 91.89%
+Época [25/30] | Train Loss: 0.2989 | Test Loss: 0.2905 | Test Acc: 91.85%
+Época [26/30] | Train Loss: 0.2992 | Test Loss: 0.2891 | Test Acc: 91.80%
+Época [27/30] | Train Loss: 0.2977 | Test Loss: 0.2891 | Test Acc: 91.95%
+Época [28/30] | Train Loss: 0.2987 | Test Loss: 0.2919 | Test Acc: 91.91%
+Época [29/30] | Train Loss: 0.2991 | Test Loss: 0.2877 | Test Acc: 91.90%
+Época [30/30] | Train Loss: 0.3000 | Test Loss: 0.2855 | Test Acc: 92.09%
+
+--- [LR] Adam (Puro) concluído em 316.69s ---
+
+================================================================================
+TREINANDO: [LR] SGD+M (Puro)
+================================================================================
+
+--- Única: SGD ---
+Época [ 1/30] | Train Loss: 0.3801 | Test Loss: 0.3059 | Test Acc: 91.32%
+Época [ 2/30] | Train Loss: 0.3122 | Test Loss: 0.3015 | Test Acc: 91.79%
+Época [ 3/30] | Train Loss: 0.3062 | Test Loss: 0.2926 | Test Acc: 91.77%
+Época [ 4/30] | Train Loss: 0.3050 | Test Loss: 0.2946 | Test Acc: 91.78%
+Época [ 5/30] | Train Loss: 0.3033 | Test Loss: 0.2952 | Test Acc: 91.78%
+Época [ 6/30] | Train Loss: 0.3029 | Test Loss: 0.2891 | Test Acc: 91.90%
+Época [ 7/30] | Train Loss: 0.3037 | Test Loss: 0.2940 | Test Acc: 91.70%
+Época [ 8/30] | Train Loss: 0.3026 | Test Loss: 0.2893 | Test Acc: 91.91%
+Época [ 9/30] | Train Loss: 0.3030 | Test Loss: 0.2930 | Test Acc: 91.51%
+Época [10/30] | Train Loss: 0.3030 | Test Loss: 0.2956 | Test Acc: 91.46%
+Época [11/30] | Train Loss: 0.3022 | Test Loss: 0.2936 | Test Acc: 91.72%
+Época [12/30] | Train Loss: 0.3026 | Test Loss: 0.2949 | Test Acc: 91.72%
+Época [13/30] | Train Loss: 0.3027 | Test Loss: 0.2911 | Test Acc: 91.89%
+Época [14/30] | Train Loss: 0.3026 | Test Loss: 0.2947 | Test Acc: 91.79%
+Época [15/30] | Train Loss: 0.3034 | Test Loss: 0.2914 | Test Acc: 91.72%
+Época [16/30] | Train Loss: 0.3023 | Test Loss: 0.2906 | Test Acc: 91.76%
+Época [17/30] | Train Loss: 0.3023 | Test Loss: 0.2970 | Test Acc: 91.67%
+Época [18/30] | Train Loss: 0.3036 | Test Loss: 0.2948 | Test Acc: 91.72%
+Época [19/30] | Train Loss: 0.3023 | Test Loss: 0.2989 | Test Acc: 91.42%
+Época [20/30] | Train Loss: 0.3025 | Test Loss: 0.2938 | Test Acc: 91.85%
+Época [21/30] | Train Loss: 0.3032 | Test Loss: 0.2934 | Test Acc: 91.61%
+Época [22/30] | Train Loss: 0.3021 | Test Loss: 0.3025 | Test Acc: 91.35%
+Época [23/30] | Train Loss: 0.3024 | Test Loss: 0.2958 | Test Acc: 91.37%
+Época [24/30] | Train Loss: 0.3021 | Test Loss: 0.2973 | Test Acc: 91.34%
+Época [25/30] | Train Loss: 0.3030 | Test Loss: 0.2940 | Test Acc: 91.77%
+Época [26/30] | Train Loss: 0.3022 | Test Loss: 0.3008 | Test Acc: 91.20%
+Época [27/30] | Train Loss: 0.3033 | Test Loss: 0.2961 | Test Acc: 91.78%
+Época [28/30] | Train Loss: 0.3030 | Test Loss: 0.2934 | Test Acc: 91.58%
+Época [29/30] | Train Loss: 0.3029 | Test Loss: 0.2926 | Test Acc: 91.82%
+Época [30/30] | Train Loss: 0.3033 | Test Loss: 0.2868 | Test Acc: 91.93%
+
+--- [LR] SGD+M (Puro) concluído em 314.71s ---
+
+================================================================================
+TREINANDO: [LR] SIGMA-D_v2 (Puro)
+================================================================================
+
+--- Única: SIGMA_D_v2 ---
+Época [ 1/30] | Train Loss: 0.7600 | Test Loss: 0.5087 | Test Acc: 86.30%
+Época [ 2/30] | Train Loss: 0.4866 | Test Loss: 0.4315 | Test Acc: 88.18%
+Época [ 3/30] | Train Loss: 0.4354 | Test Loss: 0.3980 | Test Acc: 88.89%
+Época [ 4/30] | Train Loss: 0.4093 | Test Loss: 0.3797 | Test Acc: 89.36%
+Época [ 5/30] | Train Loss: 0.3924 | Test Loss: 0.3667 | Test Acc: 89.76%
+Época [ 6/30] | Train Loss: 0.3804 | Test Loss: 0.3580 | Test Acc: 90.06%
+Época [ 7/30] | Train Loss: 0.3716 | Test Loss: 0.3510 | Test Acc: 90.21%
+Época [ 8/30] | Train Loss: 0.3649 | Test Loss: 0.3455 | Test Acc: 90.40%
+Época [ 9/30] | Train Loss: 0.3594 | Test Loss: 0.3419 | Test Acc: 90.46%
+Época [10/30] | Train Loss: 0.3549 | Test Loss: 0.3377 | Test Acc: 90.70%
+Época [11/30] | Train Loss: 0.3508 | Test Loss: 0.3340 | Test Acc: 90.78%
+Época [12/30] | Train Loss: 0.3473 | Test Loss: 0.3316 | Test Acc: 90.88%
+Época [13/30] | Train Loss: 0.3442 | Test Loss: 0.3290 | Test Acc: 90.98%
+Época [14/30] | Train Loss: 0.3415 | Test Loss: 0.3270 | Test Acc: 91.00%
+Época [15/30] | Train Loss: 0.3391 | Test Loss: 0.3247 | Test Acc: 90.99%
+Época [16/30] | Train Loss: 0.3370 | Test Loss: 0.3232 | Test Acc: 91.09%
+Época [17/30] | Train Loss: 0.3352 | Test Loss: 0.3216 | Test Acc: 91.11%
+Época [18/30] | Train Loss: 0.3332 | Test Loss: 0.3212 | Test Acc: 91.20%
+Época [19/30] | Train Loss: 0.3318 | Test Loss: 0.3187 | Test Acc: 91.16%
+Época [20/30] | Train Loss: 0.3303 | Test Loss: 0.3176 | Test Acc: 91.20%
+Época [21/30] | Train Loss: 0.3290 | Test Loss: 0.3179 | Test Acc: 91.28%
+Época [22/30] | Train Loss: 0.3278 | Test Loss: 0.3161 | Test Acc: 91.33%
+Época [23/30] | Train Loss: 0.3267 | Test Loss: 0.3162 | Test Acc: 91.28%
+Época [24/30] | Train Loss: 0.3258 | Test Loss: 0.3163 | Test Acc: 91.30%
+Época [25/30] | Train Loss: 0.3249 | Test Loss: 0.3144 | Test Acc: 91.35%
+Época [26/30] | Train Loss: 0.3240 | Test Loss: 0.3142 | Test Acc: 91.26%
+Época [27/30] | Train Loss: 0.3233 | Test Loss: 0.3127 | Test Acc: 91.36%
+Época [28/30] | Train Loss: 0.3224 | Test Loss: 0.3119 | Test Acc: 91.43%
+Época [29/30] | Train Loss: 0.3218 | Test Loss: 0.3123 | Test Acc: 91.36%
+Época [30/30] | Train Loss: 0.3211 | Test Loss: 0.3110 | Test Acc: 91.34%
+
+--- [LR] SIGMA-D_v2 (Puro) concluído em 319.54s ---
+
+================================================================================
+TREINANDO: [LR] SIGMA-C_v2 (Puro)
+================================================================================
+
+--- Única: SIGMA_C_v2 ---
+Época [ 1/30] | Train Loss: 0.5682 | Test Loss: 0.3785 | Test Acc: 90.01%
+Época [ 2/30] | Train Loss: 0.3736 | Test Loss: 0.3371 | Test Acc: 90.89%
+Época [ 3/30] | Train Loss: 0.3446 | Test Loss: 0.3209 | Test Acc: 91.14%
+Época [ 4/30] | Train Loss: 0.3300 | Test Loss: 0.3115 | Test Acc: 91.44%
+Época [ 5/30] | Train Loss: 0.3208 | Test Loss: 0.3050 | Test Acc: 91.61%
+Época [ 6/30] | Train Loss: 0.3147 | Test Loss: 0.3011 | Test Acc: 91.69%
+Época [ 7/30] | Train Loss: 0.3100 | Test Loss: 0.2979 | Test Acc: 91.78%
+Época [ 8/30] | Train Loss: 0.3064 | Test Loss: 0.2970 | Test Acc: 91.74%
+Época [ 9/30] | Train Loss: 0.3037 | Test Loss: 0.2947 | Test Acc: 91.91%
+Época [10/30] | Train Loss: 0.3014 | Test Loss: 0.2919 | Test Acc: 91.83%
+Época [11/30] | Train Loss: 0.2996 | Test Loss: 0.2908 | Test Acc: 91.86%
+Época [12/30] | Train Loss: 0.2980 | Test Loss: 0.2904 | Test Acc: 91.91%
+Época [13/30] | Train Loss: 0.2966 | Test Loss: 0.2907 | Test Acc: 91.86%
+Época [14/30] | Train Loss: 0.2954 | Test Loss: 0.2882 | Test Acc: 92.02%
+Época [15/30] | Train Loss: 0.2945 | Test Loss: 0.2882 | Test Acc: 91.95%
+Época [16/30] | Train Loss: 0.2936 | Test Loss: 0.2881 | Test Acc: 91.97%
+Época [17/30] | Train Loss: 0.2928 | Test Loss: 0.2888 | Test Acc: 92.10%
+Época [18/30] | Train Loss: 0.2920 | Test Loss: 0.2871 | Test Acc: 92.14%
+Época [19/30] | Train Loss: 0.2916 | Test Loss: 0.2866 | Test Acc: 91.99%
+Época [20/30] | Train Loss: 0.2910 | Test Loss: 0.2868 | Test Acc: 91.93%
+Época [21/30] | Train Loss: 0.2905 | Test Loss: 0.2864 | Test Acc: 92.04%
+Época [22/30] | Train Loss: 0.2902 | Test Loss: 0.2874 | Test Acc: 92.09%
+Época [23/30] | Train Loss: 0.2900 | Test Loss: 0.2852 | Test Acc: 91.93%
+Época [24/30] | Train Loss: 0.2893 | Test Loss: 0.2847 | Test Acc: 91.98%
+Época [25/30] | Train Loss: 0.2890 | Test Loss: 0.2852 | Test Acc: 91.90%
+Época [26/30] | Train Loss: 0.2888 | Test Loss: 0.2842 | Test Acc: 91.95%
+Época [27/30] | Train Loss: 0.2885 | Test Loss: 0.2837 | Test Acc: 91.98%
+Época [28/30] | Train Loss: 0.2882 | Test Loss: 0.2851 | Test Acc: 91.89%
+Época [29/30] | Train Loss: 0.2881 | Test Loss: 0.2842 | Test Acc: 91.97%
+Época [30/30] | Train Loss: 0.2880 | Test Loss: 0.2851 | Test Acc: 92.04%
+
+--- [LR] SIGMA-C_v2 (Puro) concluído em 330.10s ---
+
+================================================================================
+TREINANDO: [LR] Adam -> SGD+M
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/30] | Train Loss: 0.4452 | Test Loss: 0.3128 | Test Acc: 91.35%
+Época [ 2/30] | Train Loss: 0.3141 | Test Loss: 0.2975 | Test Acc: 91.36%
+Época [ 3/30] | Train Loss: 0.3040 | Test Loss: 0.2891 | Test Acc: 91.99%
+Época [ 4/30] | Train Loss: 0.3011 | Test Loss: 0.2905 | Test Acc: 91.73%
+Época [ 5/30] | Train Loss: 0.2999 | Test Loss: 0.2873 | Test Acc: 91.64%
+Época [ 6/30] | Train Loss: 0.2994 | Test Loss: 0.2911 | Test Acc: 91.85%
+Época [ 7/30] | Train Loss: 0.2992 | Test Loss: 0.2994 | Test Acc: 91.50%
+Época [ 8/30] | Train Loss: 0.2993 | Test Loss: 0.2861 | Test Acc: 91.86%
+Época [ 9/30] | Train Loss: 0.2984 | Test Loss: 0.2967 | Test Acc: 91.57%
+Época [10/30] | Train Loss: 0.2976 | Test Loss: 0.2933 | Test Acc: 91.53%
+Época [11/30] | Train Loss: 0.2992 | Test Loss: 0.2889 | Test Acc: 91.82%
+Época [12/30] | Train Loss: 0.2991 | Test Loss: 0.2924 | Test Acc: 91.65%
+Época [13/30] | Train Loss: 0.2985 | Test Loss: 0.2948 | Test Acc: 91.85%
+Época [14/30] | Train Loss: 0.2992 | Test Loss: 0.2876 | Test Acc: 91.91%
+Época [15/30] | Train Loss: 0.2980 | Test Loss: 0.2880 | Test Acc: 91.70%
+
+--- Fase 2: SGD ---
+Época [16/30] | Train Loss: 0.3037 | Test Loss: 0.2953 | Test Acc: 91.92%
+Época [17/30] | Train Loss: 0.3021 | Test Loss: 0.2893 | Test Acc: 91.88%
+Época [18/30] | Train Loss: 0.3027 | Test Loss: 0.2954 | Test Acc: 91.48%
+Época [19/30] | Train Loss: 0.3028 | Test Loss: 0.2992 | Test Acc: 91.64%
+Época [20/30] | Train Loss: 0.3021 | Test Loss: 0.3033 | Test Acc: 91.64%
+Época [21/30] | Train Loss: 0.3025 | Test Loss: 0.2923 | Test Acc: 91.88%
+Época [22/30] | Train Loss: 0.3033 | Test Loss: 0.2989 | Test Acc: 91.52%
+Época [23/30] | Train Loss: 0.3023 | Test Loss: 0.3016 | Test Acc: 91.59%
+Época [24/30] | Train Loss: 0.3027 | Test Loss: 0.2925 | Test Acc: 91.77%
+Época [25/30] | Train Loss: 0.3036 | Test Loss: 0.3072 | Test Acc: 91.05%
+Época [26/30] | Train Loss: 0.3020 | Test Loss: 0.3031 | Test Acc: 91.18%
+Época [27/30] | Train Loss: 0.3026 | Test Loss: 0.2937 | Test Acc: 91.62%
+Época [28/30] | Train Loss: 0.3012 | Test Loss: 0.2921 | Test Acc: 91.98%
+Época [29/30] | Train Loss: 0.3023 | Test Loss: 0.3005 | Test Acc: 91.52%
+Época [30/30] | Train Loss: 0.3032 | Test Loss: 0.2888 | Test Acc: 91.77%
+
+--- [LR] Adam -> SGD+M concluído em 316.03s ---
+
+================================================================================
+TREINANDO: [LR] Adam -> SIGMA-D_v2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/30] | Train Loss: 0.4430 | Test Loss: 0.3106 | Test Acc: 91.16%
+Época [ 2/30] | Train Loss: 0.3132 | Test Loss: 0.2929 | Test Acc: 91.76%
+Época [ 3/30] | Train Loss: 0.3046 | Test Loss: 0.2910 | Test Acc: 91.80%
+Época [ 4/30] | Train Loss: 0.3005 | Test Loss: 0.2900 | Test Acc: 91.64%
+Época [ 5/30] | Train Loss: 0.3003 | Test Loss: 0.2926 | Test Acc: 91.93%
+Época [ 6/30] | Train Loss: 0.2994 | Test Loss: 0.2890 | Test Acc: 91.97%
+Época [ 7/30] | Train Loss: 0.2991 | Test Loss: 0.2978 | Test Acc: 91.38%
+Época [ 8/30] | Train Loss: 0.2983 | Test Loss: 0.2906 | Test Acc: 91.94%
+Época [ 9/30] | Train Loss: 0.2997 | Test Loss: 0.2948 | Test Acc: 91.53%
+Época [10/30] | Train Loss: 0.2977 | Test Loss: 0.2924 | Test Acc: 91.68%
+Época [11/30] | Train Loss: 0.2990 | Test Loss: 0.2847 | Test Acc: 91.99%
+Época [12/30] | Train Loss: 0.2990 | Test Loss: 0.2882 | Test Acc: 92.12%
+Época [13/30] | Train Loss: 0.2989 | Test Loss: 0.2925 | Test Acc: 91.75%
+Época [14/30] | Train Loss: 0.2985 | Test Loss: 0.2932 | Test Acc: 91.80%
+Época [15/30] | Train Loss: 0.2987 | Test Loss: 0.2868 | Test Acc: 91.82%
+
+--- Fase 2: SIGMA_D_v2 ---
+Época [16/30] | Train Loss: 0.2860 | Test Loss: 0.2838 | Test Acc: 92.09%
+Época [17/30] | Train Loss: 0.2867 | Test Loss: 0.2847 | Test Acc: 91.98%
+Época [18/30] | Train Loss: 0.2886 | Test Loss: 0.2861 | Test Acc: 92.12%
+Época [19/30] | Train Loss: 0.2901 | Test Loss: 0.2876 | Test Acc: 91.96%
+Época [20/30] | Train Loss: 0.2922 | Test Loss: 0.2893 | Test Acc: 92.04%
+Época [21/30] | Train Loss: 0.2936 | Test Loss: 0.2911 | Test Acc: 91.85%
+Época [22/30] | Train Loss: 0.2952 | Test Loss: 0.2916 | Test Acc: 91.81%
+Época [23/30] | Train Loss: 0.2965 | Test Loss: 0.2921 | Test Acc: 92.02%
+Época [24/30] | Train Loss: 0.2978 | Test Loss: 0.2941 | Test Acc: 91.94%
+Época [25/30] | Train Loss: 0.2992 | Test Loss: 0.2950 | Test Acc: 91.89%
+Época [26/30] | Train Loss: 0.3003 | Test Loss: 0.2961 | Test Acc: 91.81%
+Época [27/30] | Train Loss: 0.3012 | Test Loss: 0.2966 | Test Acc: 91.69%
+Época [28/30] | Train Loss: 0.3020 | Test Loss: 0.2981 | Test Acc: 91.73%
+Época [29/30] | Train Loss: 0.3030 | Test Loss: 0.2989 | Test Acc: 91.79%
+Época [30/30] | Train Loss: 0.3037 | Test Loss: 0.2992 | Test Acc: 91.74%
+
+--- [LR] Adam -> SIGMA-D_v2 concluído em 316.54s ---
+
+================================================================================
+TREINANDO: [LR] Adam -> SIGMA-C_v2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/30] | Train Loss: 0.4461 | Test Loss: 0.3092 | Test Acc: 91.48%
+Época [ 2/30] | Train Loss: 0.3139 | Test Loss: 0.2935 | Test Acc: 91.82%
+Época [ 3/30] | Train Loss: 0.3048 | Test Loss: 0.2978 | Test Acc: 91.70%
+Época [ 4/30] | Train Loss: 0.3011 | Test Loss: 0.2870 | Test Acc: 91.77%
+Época [ 5/30] | Train Loss: 0.3000 | Test Loss: 0.2899 | Test Acc: 91.79%
+Época [ 6/30] | Train Loss: 0.3000 | Test Loss: 0.2975 | Test Acc: 91.68%
+Época [ 7/30] | Train Loss: 0.3001 | Test Loss: 0.2928 | Test Acc: 91.60%
+Época [ 8/30] | Train Loss: 0.2988 | Test Loss: 0.2895 | Test Acc: 91.65%
+Época [ 9/30] | Train Loss: 0.2990 | Test Loss: 0.2906 | Test Acc: 91.81%
+Época [10/30] | Train Loss: 0.2994 | Test Loss: 0.2941 | Test Acc: 91.76%
+Época [11/30] | Train Loss: 0.2991 | Test Loss: 0.2941 | Test Acc: 91.60%
+Época [12/30] | Train Loss: 0.2989 | Test Loss: 0.2951 | Test Acc: 91.70%
+Época [13/30] | Train Loss: 0.2993 | Test Loss: 0.2866 | Test Acc: 91.95%
+Época [14/30] | Train Loss: 0.2987 | Test Loss: 0.2899 | Test Acc: 91.78%
+Época [15/30] | Train Loss: 0.2993 | Test Loss: 0.2876 | Test Acc: 92.02%
+
+--- Fase 2: SIGMA_C_v2 ---
+Época [16/30] | Train Loss: 0.2854 | Test Loss: 0.2837 | Test Acc: 92.17%
+Época [17/30] | Train Loss: 0.2846 | Test Loss: 0.2826 | Test Acc: 92.10%
+Época [18/30] | Train Loss: 0.2846 | Test Loss: 0.2815 | Test Acc: 92.10%
+Época [19/30] | Train Loss: 0.2846 | Test Loss: 0.2835 | Test Acc: 92.05%
+Época [20/30] | Train Loss: 0.2847 | Test Loss: 0.2827 | Test Acc: 92.16%
+Época [21/30] | Train Loss: 0.2851 | Test Loss: 0.2826 | Test Acc: 92.04%
+Época [22/30] | Train Loss: 0.2849 | Test Loss: 0.2820 | Test Acc: 92.11%
+Época [23/30] | Train Loss: 0.2850 | Test Loss: 0.2819 | Test Acc: 91.96%
+Época [24/30] | Train Loss: 0.2853 | Test Loss: 0.2817 | Test Acc: 92.05%
+Época [25/30] | Train Loss: 0.2851 | Test Loss: 0.2823 | Test Acc: 92.02%
+Época [26/30] | Train Loss: 0.2851 | Test Loss: 0.2824 | Test Acc: 92.02%
+Época [27/30] | Train Loss: 0.2851 | Test Loss: 0.2825 | Test Acc: 91.96%
+Época [28/30] | Train Loss: 0.2852 | Test Loss: 0.2830 | Test Acc: 91.97%
+Época [29/30] | Train Loss: 0.2853 | Test Loss: 0.2825 | Test Acc: 92.13%
+Época [30/30] | Train Loss: 0.2852 | Test Loss: 0.2841 | Test Acc: 92.02%
+
+--- [LR] Adam -> SIGMA-C_v2 concluído em 323.16s ---
+
+================================================================================
+TREINANDO: [LR] Cíclico (A->S)x2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/30] | Train Loss: 0.4428 | Test Loss: 0.3065 | Test Acc: 91.48%
+Época [ 2/30] | Train Loss: 0.3128 | Test Loss: 0.2952 | Test Acc: 91.62%
+Época [ 3/30] | Train Loss: 0.3037 | Test Loss: 0.2996 | Test Acc: 91.69%
+Época [ 4/30] | Train Loss: 0.3013 | Test Loss: 0.2936 | Test Acc: 91.68%
+Época [ 5/30] | Train Loss: 0.3007 | Test Loss: 0.2903 | Test Acc: 91.61%
+Época [ 6/30] | Train Loss: 0.2991 | Test Loss: 0.2929 | Test Acc: 91.68%
+Época [ 7/30] | Train Loss: 0.2986 | Test Loss: 0.2905 | Test Acc: 91.88%
+
+--- Fase 2: SGD ---
+Época [ 8/30] | Train Loss: 0.3038 | Test Loss: 0.2981 | Test Acc: 91.45%
+Época [ 9/30] | Train Loss: 0.3027 | Test Loss: 0.2911 | Test Acc: 91.90%
+Época [10/30] | Train Loss: 0.3033 | Test Loss: 0.2926 | Test Acc: 91.75%
+Época [11/30] | Train Loss: 0.3025 | Test Loss: 0.2880 | Test Acc: 91.81%
+Época [12/30] | Train Loss: 0.3030 | Test Loss: 0.3106 | Test Acc: 91.01%
+Época [13/30] | Train Loss: 0.3027 | Test Loss: 0.2970 | Test Acc: 91.62%
+Época [14/30] | Train Loss: 0.3027 | Test Loss: 0.2883 | Test Acc: 91.72%
+Época [15/30] | Train Loss: 0.3022 | Test Loss: 0.3019 | Test Acc: 91.55%
+
+--- Fase 3: Adam ---
+Época [16/30] | Train Loss: 0.2995 | Test Loss: 0.2865 | Test Acc: 92.00%
+Época [17/30] | Train Loss: 0.2991 | Test Loss: 0.2919 | Test Acc: 91.52%
+Época [18/30] | Train Loss: 0.2986 | Test Loss: 0.2915 | Test Acc: 92.04%
+Época [19/30] | Train Loss: 0.2997 | Test Loss: 0.2858 | Test Acc: 92.08%
+Época [20/30] | Train Loss: 0.2993 | Test Loss: 0.2966 | Test Acc: 91.54%
+Época [21/30] | Train Loss: 0.2984 | Test Loss: 0.2888 | Test Acc: 91.87%
+Época [22/30] | Train Loss: 0.2985 | Test Loss: 0.2890 | Test Acc: 91.94%
+
+--- Fase 4: SGD ---
+Época [23/30] | Train Loss: 0.3023 | Test Loss: 0.3047 | Test Acc: 91.55%
+Época [24/30] | Train Loss: 0.3014 | Test Loss: 0.2930 | Test Acc: 91.62%
+Época [25/30] | Train Loss: 0.3041 | Test Loss: 0.2971 | Test Acc: 91.78%
+Época [26/30] | Train Loss: 0.3035 | Test Loss: 0.2984 | Test Acc: 91.45%
+Época [27/30] | Train Loss: 0.3024 | Test Loss: 0.2954 | Test Acc: 91.72%
+Época [28/30] | Train Loss: 0.3011 | Test Loss: 0.2898 | Test Acc: 91.98%
+Época [29/30] | Train Loss: 0.3030 | Test Loss: 0.2921 | Test Acc: 91.41%
+Época [30/30] | Train Loss: 0.3028 | Test Loss: 0.2884 | Test Acc: 92.01%
+
+--- [LR] Cíclico (A->S)x2 concluído em 315.59s ---
+
+================================================================================
+TREINANDO: [LR] Cíclico (A->D)x2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/30] | Train Loss: 0.4429 | Test Loss: 0.3104 | Test Acc: 91.36%
+Época [ 2/30] | Train Loss: 0.3129 | Test Loss: 0.2929 | Test Acc: 91.75%
+Época [ 3/30] | Train Loss: 0.3038 | Test Loss: 0.2890 | Test Acc: 92.05%
+Época [ 4/30] | Train Loss: 0.3013 | Test Loss: 0.2899 | Test Acc: 91.84%
+Época [ 5/30] | Train Loss: 0.3008 | Test Loss: 0.2883 | Test Acc: 92.05%
+Época [ 6/30] | Train Loss: 0.2995 | Test Loss: 0.2995 | Test Acc: 91.25%
+Época [ 7/30] | Train Loss: 0.2989 | Test Loss: 0.2877 | Test Acc: 91.86%
+
+--- Fase 2: SIGMA_D_v2 ---
+Época [ 8/30] | Train Loss: 0.2871 | Test Loss: 0.2841 | Test Acc: 92.17%
+Época [ 9/30] | Train Loss: 0.2875 | Test Loss: 0.2855 | Test Acc: 92.03%
+Época [10/30] | Train Loss: 0.2890 | Test Loss: 0.2865 | Test Acc: 92.00%
+Época [11/30] | Train Loss: 0.2908 | Test Loss: 0.2886 | Test Acc: 91.96%
+Época [12/30] | Train Loss: 0.2925 | Test Loss: 0.2899 | Test Acc: 91.88%
+Época [13/30] | Train Loss: 0.2941 | Test Loss: 0.2912 | Test Acc: 91.90%
+Época [14/30] | Train Loss: 0.2956 | Test Loss: 0.2932 | Test Acc: 91.98%
+Época [15/30] | Train Loss: 0.2970 | Test Loss: 0.2931 | Test Acc: 91.87%
+
+--- Fase 3: Adam ---
+Época [16/30] | Train Loss: 0.3049 | Test Loss: 0.2886 | Test Acc: 91.98%
+Época [17/30] | Train Loss: 0.2995 | Test Loss: 0.2934 | Test Acc: 91.52%
+Época [18/30] | Train Loss: 0.2998 | Test Loss: 0.2919 | Test Acc: 91.81%
+Época [19/30] | Train Loss: 0.2990 | Test Loss: 0.2907 | Test Acc: 91.76%
+Época [20/30] | Train Loss: 0.2989 | Test Loss: 0.2967 | Test Acc: 91.45%
+Época [21/30] | Train Loss: 0.2985 | Test Loss: 0.2850 | Test Acc: 92.02%
+Época [22/30] | Train Loss: 0.2992 | Test Loss: 0.2970 | Test Acc: 91.53%
+
+--- Fase 4: SIGMA_D_v2 ---
+Época [23/30] | Train Loss: 0.2859 | Test Loss: 0.2827 | Test Acc: 91.99%
+Época [24/30] | Train Loss: 0.2865 | Test Loss: 0.2856 | Test Acc: 91.97%
+Época [25/30] | Train Loss: 0.2882 | Test Loss: 0.2859 | Test Acc: 91.93%
+Época [26/30] | Train Loss: 0.2901 | Test Loss: 0.2868 | Test Acc: 91.91%
+Época [27/30] | Train Loss: 0.2920 | Test Loss: 0.2880 | Test Acc: 91.93%
+Época [28/30] | Train Loss: 0.2935 | Test Loss: 0.2903 | Test Acc: 91.79%
+Época [29/30] | Train Loss: 0.2950 | Test Loss: 0.2920 | Test Acc: 91.85%
+Época [30/30] | Train Loss: 0.2964 | Test Loss: 0.2937 | Test Acc: 91.81%
+
+--- [LR] Cíclico (A->D)x2 concluído em 317.16s ---
+
+================================================================================
+TREINANDO: [LR] Cíclico (A->C)x2
+================================================================================
+
+--- Fase 1: Adam ---
+Época [ 1/30] | Train Loss: 0.4410 | Test Loss: 0.3077 | Test Acc: 91.40%
+Época [ 2/30] | Train Loss: 0.3128 | Test Loss: 0.3031 | Test Acc: 91.45%
+Época [ 3/30] | Train Loss: 0.3032 | Test Loss: 0.2987 | Test Acc: 91.33%
+Época [ 4/30] | Train Loss: 0.3001 | Test Loss: 0.2891 | Test Acc: 92.01%
+Época [ 5/30] | Train Loss: 0.2995 | Test Loss: 0.2934 | Test Acc: 91.62%
+Época [ 6/30] | Train Loss: 0.2994 | Test Loss: 0.2900 | Test Acc: 91.86%
+Época [ 7/30] | Train Loss: 0.2992 | Test Loss: 0.2999 | Test Acc: 91.59%
+
+--- Fase 2: SIGMA_C_v2 ---
+Época [ 8/30] | Train Loss: 0.2860 | Test Loss: 0.2817 | Test Acc: 92.04%
+Época [ 9/30] | Train Loss: 0.2847 | Test Loss: 0.2821 | Test Acc: 92.04%
+Época [10/30] | Train Loss: 0.2848 | Test Loss: 0.2831 | Test Acc: 91.98%
+Época [11/30] | Train Loss: 0.2848 | Test Loss: 0.2811 | Test Acc: 92.03%
+Época [12/30] | Train Loss: 0.2849 | Test Loss: 0.2815 | Test Acc: 92.13%
+Época [13/30] | Train Loss: 0.2850 | Test Loss: 0.2822 | Test Acc: 92.05%
+Época [14/30] | Train Loss: 0.2849 | Test Loss: 0.2822 | Test Acc: 92.01%
+Época [15/30] | Train Loss: 0.2851 | Test Loss: 0.2819 | Test Acc: 92.04%
+
+--- Fase 3: Adam ---
+Época [16/30] | Train Loss: 0.2996 | Test Loss: 0.2960 | Test Acc: 91.30%
+Época [17/30] | Train Loss: 0.2991 | Test Loss: 0.2922 | Test Acc: 91.72%
+Época [18/30] | Train Loss: 0.2980 | Test Loss: 0.2863 | Test Acc: 92.00%
+Época [19/30] | Train Loss: 0.2982 | Test Loss: 0.2854 | Test Acc: 91.88%
+Época [20/30] | Train Loss: 0.2991 | Test Loss: 0.2869 | Test Acc: 91.94%
+Época [21/30] | Train Loss: 0.2987 | Test Loss: 0.2932 | Test Acc: 91.88%
+Época [22/30] | Train Loss: 0.2988 | Test Loss: 0.2906 | Test Acc: 91.74%
+
+--- Fase 4: SIGMA_C_v2 ---
+Época [23/30] | Train Loss: 0.2859 | Test Loss: 0.2821 | Test Acc: 92.03%
+Época [24/30] | Train Loss: 0.2847 | Test Loss: 0.2824 | Test Acc: 92.14%
+Época [25/30] | Train Loss: 0.2846 | Test Loss: 0.2825 | Test Acc: 92.01%
+Época [26/30] | Train Loss: 0.2848 | Test Loss: 0.2816 | Test Acc: 92.07%
+Época [27/30] | Train Loss: 0.2849 | Test Loss: 0.2823 | Test Acc: 91.99%
+Época [28/30] | Train Loss: 0.2849 | Test Loss: 0.2817 | Test Acc: 92.10%
+Época [29/30] | Train Loss: 0.2851 | Test Loss: 0.2825 | Test Acc: 91.96%
+Época [30/30] | Train Loss: 0.2850 | Test Loss: 0.2837 | Test Acc: 92.02%
+
+--- [LR] Cíclico (A->C)x2 concluído em 337.25s ---
+
+Gerando gráficos de comparação (RedES Neurais - v3)...
+Gráfico salvo: 'sigma_hybrid_comparison_nn_v3.pdf'
+
+Gerando gráficos de comparação (Regressão Logística - v3)...
+Gráfico salvo: 'sigma_full_comparison_logistic_v3.pdf'
+
+Gerando gráfico de resumo (Plot 3 - v3)...
+Gráfico de resumo salvo: 'sigma_summary_comparison_v3.pdf'
+
+================================================================================
+================================================================================
+RESUMO FINAL - REDES NEURAIS (v3)
+================================================================================
+
+Experimento               | Acc Final  | Loss Final  | Tempo (s)
+-----------------------------------------------------------------
+
+Experimento               | Acc Final  | Loss Final  | Tempo (s)
+-----------------------------------------------------------------
+Experimento               | Acc Final  | Loss Final  | Tempo (s)
+-----------------------------------------------------------------
+Adam (Puro)               |     96.05% |     0.1405 |    225.79s
+SGD+M (Puro)              |     96.78% |     0.1224 |    215.43s
+SIGMA-D_v2 (Puro)         |     92.61% |     0.2725 |    227.24s
+Adam (Puro)               |     96.05% |     0.1405 |    225.79s
+SGD+M (Puro)              |     96.78% |     0.1224 |    215.43s
+SIGMA-D_v2 (Puro)         |     92.61% |     0.2725 |    227.24s
+SGD+M (Puro)              |     96.78% |     0.1224 |    215.43s
+SIGMA-D_v2 (Puro)         |     92.61% |     0.2725 |    227.24s
+SIGMA-C_v2 (Puro)         |     95.26% |     0.1722 |    259.85s
+Adam -> SGD+M             |     96.72% |     0.1287 |    216.24s
+Adam -> SIGMA-D_v2        |     96.35% |     0.1554 |    223.44s
+Adam -> SIGMA-C_v2        |     97.12% |     0.1174 |    239.97s
+Cíclico (A->S)x2          |     96.86% |     0.1199 |    216.55s
+Cíclico (A->D)x2          |     96.53% |     0.1408 |    228.61s
+SIGMA-C_v2 (Puro)         |     95.26% |     0.1722 |    259.85s
+Adam -> SGD+M             |     96.72% |     0.1287 |    216.24s
+Adam -> SIGMA-D_v2        |     96.35% |     0.1554 |    223.44s
+Adam -> SIGMA-C_v2        |     97.12% |     0.1174 |    239.97s
+Cíclico (A->S)x2          |     96.86% |     0.1199 |    216.55s
+Cíclico (A->D)x2          |     96.53% |     0.1408 |    228.61s
+Adam -> SIGMA-C_v2        |     97.12% |     0.1174 |    239.97s
+Cíclico (A->S)x2          |     96.86% |     0.1199 |    216.55s
+Cíclico (A->D)x2          |     96.53% |     0.1408 |    228.61s
+Cíclico (A->C)x2          |     97.13% |     0.1181 |    251.45s
+
+================================================================================
+
+================================================================================
+RESUMO FINAL - REGRESSÃO LOGÍSTICA (v3) (PROBLEMA CONVEXO)
+================================================================================
+RESUMO FINAL - REGRESSÃO LOGÍSTICA (v3) (PROBLEMA CONVEXO)
+================================================================================
+RESUMO FINAL - REGRESSÃO LOGÍSTICA (v3) (PROBLEMA CONVEXO)
+================================================================================
+
+================================================================================
+
+
+Otimizador                | Acc Final  | Loss Final  | Tempo (s)
+----------------------------------------------------------------------
+Adam (Puro)               |     92.09% |   0.300037 |    316.69s
+SGD+M (Puro)              |     91.93% |   0.303303 |    314.71s
+SGD+M (Puro)              |     91.93% |   0.303303 |    314.71s
+SIGMA-D_v2 (Puro)         |     91.34% |   0.321136 |    319.54s
+SIGMA-C_v2 (Puro)         |     92.04% |   0.287976 |    330.10s
+Adam -> SGD+M             |     91.77% |   0.303205 |    316.03s
+Adam -> SIGMA-D_v2        |     91.74% |   0.303738 |    316.54s
+Adam -> SIGMA-C_v2        |     92.02% |   0.285215 |    323.16s
+Adam -> SIGMA-C_v2        |     92.02% |   0.285215 |    323.16s
+Cíclico (A->S)x2          |     92.01% |   0.302838 |    315.59s
+Cíclico (A->D)x2          |     91.81% |   0.296389 |    317.16s
+Cíclico (A->C)x2          |     92.02% |   0.284995 |    337.25s
+
+================================================================================
+Benchmark v3 concluído com sucesso!

@@ -1,18 +1,11 @@
 """
-Benchmark Comparativo de Híbridos Sequenciais v2
+Benchmark Comparativo v3 - Sincronizado
 ======================================================
-Script Principal para Execução (Versão 2)
+Script Principal para Execução
 
-Este script importa:
-- Otimizadores de 'optimizers_v2.py'
-- Modelos de 'models.py'
-- Funções de utilidade de 'utils_v2.py'
-- Funções de plotagem de 'plotting_v2.py'
-
-Todos os otimizadores agora usam weight_decay para uma comparação
-mais justa (AdamW, SGDW, SIGMA-D_v2, SIGMA-C_v2).
-
-*** NOVO: Adicionado Experimento Cíclico (A->C->A->C) ***
+Atualizações:
+1. Experimentos de NN e LR estão idênticos (Puros, Híbridos, Cíclicos).
+2. Gera o gráfico combinado específico (Resumo) no final.
 """
 
 import torch
@@ -20,356 +13,260 @@ import torch.nn as nn
 import torch.optim as optim
 import copy
 
-# Importações dos arquivos locais v2
+# Importações locais
 from models import MNISTNet, LogisticRegression
 from optimizers_v2 import SIGMA_D_v2, SIGMA_C_v2
 from utils_v2 import get_data_loaders, run_experiment
-from plotting_v2 import generate_nn_plots, generate_lr_plots
+# Importa a nova função de plotagem combinada
+from plotting_v2 import generate_nn_plots, generate_lr_plots, generate_combined_plot
 
 def main():
-    """Executa todos os experimentos v2 e gera análises comparativas."""
-    
     # Configuração
     DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Usando dispositivo: {DEVICE}")
     
-    # Configurações de Épocas da Rede Neural
+    # Configurações de Épocas (NN: 20 total, LR: 30 total)
     N_EPOCHS_NN_TOTAL = 20
     N_EPOCHS_NN_PHASE1 = 10
-    N_EPOCHS_NN_PHASE2 = N_EPOCHS_NN_TOTAL - N_EPOCHS_NN_PHASE1
+    N_EPOCHS_NN_PHASE2 = 10
     
-    # Configurações de Épocas da Regressão Logística
     N_EPOCHS_LR_TOTAL = 30
     N_EPOCHS_LR_PHASE1 = 15
-    N_EPOCHS_LR_PHASE2 = N_EPOCHS_LR_TOTAL - N_EPOCHS_LR_PHASE1
+    N_EPOCHS_LR_PHASE2 = 15
     
-    # Parâmetros de LR (baseados em _SIGMA.py)
+    # Hiperparâmetros
     LR_ADAM = 0.001
     LR_SGD = 0.01
     LR_SIGMA = 0.01
-    
-    # Weight decay padrão para todos os otimizadores
-    WD = 0.01 
+    WD = 0
     
     # Dados
     train_loader, test_loader = get_data_loaders()
     loss_fn = nn.CrossEntropyLoss()
     
     # =======================================================================
-    # PARTE 1: EXPERIMENTOS COM REDES NEURAIS
+    # PARTE 1: EXPERIMENTOS COM REDES NEURAIS (NÃO-CONVEXO)
     # =======================================================================
-    
     print("\n" + "="*80)
-    print("PARTE 1: EXPERIMENTOS v2 COM REDES NEURAIS (HÍBRIDOS SEQUENCIAIS)")
+    print("PARTE 1: REDES NEURAIS (Conjunto Completo)")
     print("="*80)
     
     base_model = MNISTNet().to(DEVICE)
-    
     results_nn = {}
     times_nn = {}
     
-    # --- EXPERIMENTO 1: Adam (Baseline) ---
-    model_adam = copy.deepcopy(base_model)
-    optimizer_adam = optim.Adam(model_adam.parameters(), lr=LR_ADAM, weight_decay=WD)
-    
-    history_adam, time_adam = run_experiment(
-        experiment_name="Adam (Baseline)",
-        model=model_adam,
-        optimizer_config=[(optimizer_adam, N_EPOCHS_NN_TOTAL)],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_NN_TOTAL
+    # 1. Adam (Puro)
+    m = copy.deepcopy(base_model)
+    opt = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    results_nn['Adam (Puro)'], times_nn['Adam (Puro)'] = run_experiment(
+        "[NN] Adam (Puro)", m, [(opt, N_EPOCHS_NN_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
     )
-    results_nn['Adam (Baseline)'] = history_adam
-    times_nn['Adam (Baseline)'] = time_adam
-    
-    # --- EXPERIMENTO 2: Híbrido (Adam → SGD+M) - GRUPO DE CONTROLE ---
-    model_hybrid_sgd = copy.deepcopy(base_model)
-    optimizer_adam_phase1_ctrl = optim.Adam(model_hybrid_sgd.parameters(), lr=LR_ADAM, weight_decay=WD)
-    optimizer_sgd_phase2 = optim.SGD(model_hybrid_sgd.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
-    
-    history_hybrid_sgd, time_hybrid_sgd = run_experiment(
-        experiment_name="Adam -> SGD+M",
-        model=model_hybrid_sgd,
-        optimizer_config=[
-            (optimizer_adam_phase1_ctrl, N_EPOCHS_NN_PHASE1),
-            (optimizer_sgd_phase2, N_EPOCHS_NN_PHASE2)
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_NN_TOTAL
-    )
-    results_nn['Adam -> SGD+M'] = history_hybrid_sgd
-    times_nn['Adam -> SGD+M'] = time_hybrid_sgd
 
-    # --- EXPERIMENTO 3: Híbrido (Adam → SIGMA-D_v2) ---
-    model_hybrid_sigma_d = copy.deepcopy(base_model)
-    optimizer_adam_phase1_d = optim.Adam(model_hybrid_sigma_d.parameters(), lr=LR_ADAM, weight_decay=WD)
-    optimizer_sigma_d = SIGMA_D_v2(
-        model_hybrid_sigma_d.parameters(),
-        lr=LR_SIGMA,
-        beta=0.9,
-        weight_decay=WD
+    # 2. SGD+M (Puro)
+    m = copy.deepcopy(base_model)
+    opt = optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
+    results_nn['SGD+M (Puro)'], times_nn['SGD+M (Puro)'] = run_experiment(
+        "[NN] SGD+M (Puro)", m, [(opt, N_EPOCHS_NN_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
     )
-    
-    history_hybrid_sigma_d, time_hybrid_sigma_d = run_experiment(
-        experiment_name="Adam -> SIGMA-D_v2",
-        model=model_hybrid_sigma_d,
-        optimizer_config=[
-            (optimizer_adam_phase1_d, N_EPOCHS_NN_PHASE1),
-            (optimizer_sigma_d, N_EPOCHS_NN_PHASE2)
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_NN_TOTAL
-    )
-    results_nn['Adam -> SIGMA-D_v2'] = history_hybrid_sigma_d
-    times_nn['Adam -> SIGMA-D_v2'] = time_hybrid_sigma_d
 
-    # --- EXPERIMENTO 4: Híbrido (Adam → SIGMA-C_v2) ---
-    model_hybrid_sigma_c = copy.deepcopy(base_model)
-    optimizer_adam_phase1_c = optim.Adam(model_hybrid_sigma_c.parameters(), lr=LR_ADAM, weight_decay=WD)
-    optimizer_sigma_c = SIGMA_C_v2(
-        model_hybrid_sigma_c.parameters(),
-        lr=LR_SIGMA,
-        beta=0.9,
-        weight_decay=WD
+    # 3. SIGMA-D (Puro)
+    m = copy.deepcopy(base_model)
+    opt = SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_nn['SIGMA-D_v2 (Puro)'], times_nn['SIGMA-D_v2 (Puro)'] = run_experiment(
+        "[NN] SIGMA-D_v2 (Puro)", m, [(opt, N_EPOCHS_NN_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
+    )
+
+    # 4. SIGMA-C (Puro)
+    m = copy.deepcopy(base_model)
+    opt = SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_nn['SIGMA-C_v2 (Puro)'], times_nn['SIGMA-C_v2 (Puro)'] = run_experiment(
+        "[NN] SIGMA-C_v2 (Puro)", m, [(opt, N_EPOCHS_NN_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
     )
     
-    history_hybrid_sigma_c, time_hybrid_sigma_c = run_experiment(
-        experiment_name="Adam -> SIGMA-C_v2",
-        model=model_hybrid_sigma_c,
-        optimizer_config=[
-            (optimizer_adam_phase1_c, N_EPOCHS_NN_PHASE1),
-            (optimizer_sigma_c, N_EPOCHS_NN_PHASE2)
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_NN_TOTAL
+    # 5. Adam -> SGD+M (Híbrido)
+    m = copy.deepcopy(base_model)
+    opt1 = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt2 = optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
+    results_nn['Adam -> SGD+M'], times_nn['Adam -> SGD+M'] = run_experiment(
+        "[NN] Adam -> SGD+M", m, [(opt1, N_EPOCHS_NN_PHASE1), (opt2, N_EPOCHS_NN_PHASE2)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
     )
-    results_nn['Adam -> SIGMA-C_v2'] = history_hybrid_sigma_c
-    times_nn['Adam -> SIGMA-C_v2'] = time_hybrid_sigma_c
-    
-    # --- EXPERIMENTO 5: Cíclico (Adam -> SIGMA-C_v2) x2 --- (NOVO)
-    model_cyclic = copy.deepcopy(base_model)
-    
-    # Configuração das 4 fases do otimizador
-    opt_fase1 = optim.Adam(model_cyclic.parameters(), lr=LR_ADAM, weight_decay=WD)
-    opt_fase2 = SIGMA_C_v2(model_cyclic.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
-    opt_fase3 = optim.Adam(model_cyclic.parameters(), lr=LR_ADAM, weight_decay=WD)
-    opt_fase4 = SIGMA_C_v2(model_cyclic.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
-    
-    history_cyclic, time_cyclic = run_experiment(
-        experiment_name="Cíclico (A->C)x2",
-        model=model_cyclic,
-        optimizer_config=[
-            (opt_fase1, 5), # 5 épocas Adam
-            (opt_fase2, 5), # 5 épocas SIGMA-C
-            (opt_fase3, 5), # 5 épocas Adam
-            (opt_fase4, 5)  # 5 épocas SIGMA-C
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_NN_TOTAL
+
+    # 6. Adam -> SIGMA-D (Híbrido)
+    m = copy.deepcopy(base_model)
+    opt1 = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt2 = SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_nn['Adam -> SIGMA-D_v2'], times_nn['Adam -> SIGMA-D_v2'] = run_experiment(
+        "[NN] Adam -> SIGMA-D_v2", m, [(opt1, N_EPOCHS_NN_PHASE1), (opt2, N_EPOCHS_NN_PHASE2)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
     )
-    results_nn['Cíclico (A->C)x2'] = history_cyclic
-    times_nn['Cíclico (A->C)x2'] = time_cyclic
+
+    # 7. Adam -> SIGMA-C (Híbrido)
+    m = copy.deepcopy(base_model)
+    opt1 = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt2 = SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_nn['Adam -> SIGMA-C_v2'], times_nn['Adam -> SIGMA-C_v2'] = run_experiment(
+        "[NN] Adam -> SIGMA-C_v2", m, [(opt1, N_EPOCHS_NN_PHASE1), (opt2, N_EPOCHS_NN_PHASE2)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
+    )
+    
+    # 8. Cíclico (A->S)x2 (5 épocas cada)
+    m = copy.deepcopy(base_model)
+    opt_list = [
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 5),
+        (optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD), 5),
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 5),
+        (optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD), 5)
+    ]
+    results_nn['Cíclico (A->S)x2'], times_nn['Cíclico (A->S)x2'] = run_experiment(
+        "[NN] Cíclico (A->S)x2", m, opt_list, train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
+    )
+
+    # 9. Cíclico (A->D)x2 (5 épocas cada)
+    m = copy.deepcopy(base_model)
+    opt_list = [
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 5),
+        (SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 5),
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 5),
+        (SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 5)
+    ]
+    results_nn['Cíclico (A->D)x2'], times_nn['Cíclico (A->D)x2'] = run_experiment(
+        "[NN] Cíclico (A->D)x2", m, opt_list, train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
+    )
+
+    # 10. Cíclico (A->C)x2 (5 épocas cada)
+    m = copy.deepcopy(base_model)
+    opt_list = [
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 5),
+        (SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 5),
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 5),
+        (SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 5)
+    ]
+    results_nn['Cíclico (A->C)x2'], times_nn['Cíclico (A->C)x2'] = run_experiment(
+        "[NN] Cíclico (A->C)x2", m, opt_list, train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_NN_TOTAL
+    )
     
     # =======================================================================
-    # PARTE 2: EXPERIMENTOS COM REGRESSÃO LOGÍSTICA
-    # (Sem alteração, mantido como estava)
+    # PARTE 2: EXPERIMENTOS COM REGRESSÃO LOGÍSTICA (CONVEXO)
     # =======================================================================
-    
     print("\n" + "="*80)
-    print("PARTE 2: EXPERIMENTOS v2 COM REGRESSÃO LOGÍSTICA (PROBLEMA CONVEXO)")
+    print("PARTE 2: REGRESSÃO LOGÍSTICA (Conjunto Completo)")
     print("="*80)
     
     base_logistic = LogisticRegression().to(DEVICE)
     results_lr = {}
     times_lr = {}
     
-    # --- Experimento LR-Puro 1: Adam ---
-    model_lr_adam = copy.deepcopy(base_logistic)
-    optimizer_lr_adam = optim.Adam(model_lr_adam.parameters(), lr=LR_ADAM, weight_decay=WD)
-    history_lr_adam, time_lr_adam = run_experiment(
-        experiment_name="[LR] Adam (Puro)",
-        model=model_lr_adam,
-        optimizer_config=[(optimizer_lr_adam, N_EPOCHS_LR_TOTAL)],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
+    # 1. Adam (Puro)
+    m = copy.deepcopy(base_logistic)
+    opt = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    results_lr['Adam (Puro)'], times_lr['Adam (Puro)'] = run_experiment(
+        "[LR] Adam (Puro)", m, [(opt, N_EPOCHS_LR_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    results_lr['Adam (Puro)'] = history_lr_adam
-    times_lr['Adam (Puro)'] = time_lr_adam
     
-    # --- Experimento LR-Puro 2: SGD+Momentum ---
-    model_lr_sgd = copy.deepcopy(base_logistic)
-    optimizer_lr_sgd = optim.SGD(model_lr_sgd.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
-    history_lr_sgd, time_lr_sgd = run_experiment(
-        experiment_name="[LR] SGD+M (Puro)",
-        model=model_lr_sgd,
-        optimizer_config=[(optimizer_lr_sgd, N_EPOCHS_LR_TOTAL)],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
+    # 2. SGD+M (Puro)
+    m = copy.deepcopy(base_logistic)
+    opt = optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
+    results_lr['SGD+M (Puro)'], times_lr['SGD+M (Puro)'] = run_experiment(
+        "[LR] SGD+M (Puro)", m, [(opt, N_EPOCHS_LR_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    results_lr['SGD+M (Puro)'] = history_lr_sgd
-    times_lr['SGD+M (Puro)'] = time_lr_sgd
     
-    # --- Experimento LR-Puro 3: SIGMA-D_v2 ---
-    model_lr_sigma_d = copy.deepcopy(base_logistic)
-    optimizer_lr_sigma_d = SIGMA_D_v2(
-        model_lr_sigma_d.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD
+    # 3. SIGMA-D (Puro)
+    m = copy.deepcopy(base_logistic)
+    opt = SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_lr['SIGMA-D_v2 (Puro)'], times_lr['SIGMA-D_v2 (Puro)'] = run_experiment(
+        "[LR] SIGMA-D_v2 (Puro)", m, [(opt, N_EPOCHS_LR_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    history_lr_sigma_d, time_lr_sigma_d = run_experiment(
-        experiment_name="[LR] SIGMA-D_v2 (Puro)",
-        model=model_lr_sigma_d,
-        optimizer_config=[(optimizer_lr_sigma_d, N_EPOCHS_LR_TOTAL)],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
-    )
-    results_lr['SIGMA-D_v2 (Puro)'] = history_lr_sigma_d
-    times_lr['SIGMA-D_v2 (Puro)'] = time_lr_sigma_d
 
-    # --- Experimento LR-Puro 4: SIGMA-C_v2 ---
-    model_lr_sigma_c = copy.deepcopy(base_logistic)
-    optimizer_lr_sigma_c = SIGMA_C_v2(
-        model_lr_sigma_c.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD
+    # 4. SIGMA-C (Puro)
+    m = copy.deepcopy(base_logistic)
+    opt = SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_lr['SIGMA-C_v2 (Puro)'], times_lr['SIGMA-C_v2 (Puro)'] = run_experiment(
+        "[LR] SIGMA-C_v2 (Puro)", m, [(opt, N_EPOCHS_LR_TOTAL)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    history_lr_sigma_c, time_lr_sigma_c = run_experiment(
-        experiment_name="[LR] SIGMA-C_v2 (Puro)",
-        model=model_lr_sigma_c,
-        optimizer_config=[(optimizer_lr_sigma_c, N_EPOCHS_LR_TOTAL)],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
-    )
-    results_lr['SIGMA-C_v2 (Puro)'] = history_lr_sigma_c
-    times_lr['SIGMA-C_v2 (Puro)'] = time_lr_sigma_c
     
-    # --- Experimento LR-Híbrido 1: Adam -> SGD+M ---
-    model_lr_h_sgd = copy.deepcopy(base_logistic)
-    optimizer_lr_h_adam = optim.Adam(model_lr_h_sgd.parameters(), lr=LR_ADAM, weight_decay=WD)
-    optimizer_lr_h_sgd = optim.SGD(model_lr_h_sgd.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
-    
-    history_lr_h_sgd, time_lr_h_sgd = run_experiment(
-        experiment_name="[LR] Adam -> SGD+M",
-        model=model_lr_h_sgd,
-        optimizer_config=[
-            (optimizer_lr_h_adam, N_EPOCHS_LR_PHASE1),
-            (optimizer_lr_h_sgd, N_EPOCHS_LR_PHASE2)
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
+    # 5. Adam -> SGD+M (Híbrido)
+    m = copy.deepcopy(base_logistic)
+    opt1 = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt2 = optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD)
+    results_lr['Adam -> SGD+M'], times_lr['Adam -> SGD+M'] = run_experiment(
+        "[LR] Adam -> SGD+M", m, [(opt1, N_EPOCHS_LR_PHASE1), (opt2, N_EPOCHS_LR_PHASE2)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    results_lr['Adam -> SGD+M'] = history_lr_h_sgd
-    times_lr['Adam -> SGD+M'] = time_lr_h_sgd
 
-    # --- Experimento LR-Híbrido 2: Adam -> SIGMA-D_v2 ---
-    model_lr_h_sigmad = copy.deepcopy(base_logistic)
-    optimizer_lr_h_adam_d = optim.Adam(model_lr_h_sigmad.parameters(), lr=LR_ADAM, weight_decay=WD)
-    optimizer_lr_h_sigmad = SIGMA_D_v2(
-        model_lr_h_sigmad.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD
+    # 6. Adam -> SIGMA-D (Híbrido)
+    m = copy.deepcopy(base_logistic)
+    opt1 = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt2 = SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_lr['Adam -> SIGMA-D_v2'], times_lr['Adam -> SIGMA-D_v2'] = run_experiment(
+        "[LR] Adam -> SIGMA-D_v2", m, [(opt1, N_EPOCHS_LR_PHASE1), (opt2, N_EPOCHS_LR_PHASE2)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    
-    history_lr_h_sigmad, time_lr_h_sigmad = run_experiment(
-        experiment_name="[LR] Adam -> SIGMA-D_v2",
-        model=model_lr_h_sigmad,
-        optimizer_config=[
-            (optimizer_lr_h_adam_d, N_EPOCHS_LR_PHASE1),
-            (optimizer_lr_h_sigmad, N_EPOCHS_LR_PHASE2)
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
-    )
-    results_lr['Adam -> SIGMA-D_v2'] = history_lr_h_sigmad
-    times_lr['Adam -> SIGMA-D_v2'] = time_lr_h_sigmad
 
-    # --- Experimento LR-Híbrido 3: Adam -> SIGMA-C_v2 ---
-    model_lr_h_sigmac = copy.deepcopy(base_logistic)
-    optimizer_lr_h_adam_c = optim.Adam(model_lr_h_sigmac.parameters(), lr=LR_ADAM, weight_decay=WD)
-    optimizer_lr_h_sigmac = SIGMA_C_v2(
-        model_lr_h_sigmac.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD
+    # 7. Adam -> SIGMA-C (Híbrido)
+    m = copy.deepcopy(base_logistic)
+    opt1 = optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD)
+    opt2 = SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD)
+    results_lr['Adam -> SIGMA-C_v2'], times_lr['Adam -> SIGMA-C_v2'] = run_experiment(
+        "[LR] Adam -> SIGMA-C_v2", m, [(opt1, N_EPOCHS_LR_PHASE1), (opt2, N_EPOCHS_LR_PHASE2)], 
+        train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    
-    history_lr_h_sigmac, time_lr_h_sigmac = run_experiment(
-        experiment_name="[LR] Adam -> SIGMA-C_v2",
-        model=model_lr_h_sigmac,
-        optimizer_config=[
-            (optimizer_lr_h_adam_c, N_EPOCHS_LR_PHASE1),
-            (optimizer_lr_h_sigmac, N_EPOCHS_LR_PHASE2)
-        ],
-        train_loader=train_loader, test_loader=test_loader,
-        device=DEVICE, loss_fn=loss_fn, n_epochs=N_EPOCHS_LR_TOTAL
+
+    # 8. Cíclico (A->S)x2 (7+8+7+8 = 30 épocas)
+    m = copy.deepcopy(base_logistic)
+    opt_list = [
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 7),
+        (optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD), 8),
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 7),
+        (optim.SGD(m.parameters(), lr=LR_SGD, momentum=0.9, weight_decay=WD), 8)
+    ]
+    results_lr['Cíclico (A->S)x2'], times_lr['Cíclico (A->S)x2'] = run_experiment(
+        "[LR] Cíclico (A->S)x2", m, opt_list, train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
     )
-    results_lr['Adam -> SIGMA-C_v2'] = history_lr_h_sigmac
-    times_lr['Adam -> SIGMA-C_v2'] = time_lr_h_sigmac
+
+    # 9. Cíclico (A->D)x2 (7+8+7+8)
+    m = copy.deepcopy(base_logistic)
+    opt_list = [
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 7),
+        (SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 8),
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 7),
+        (SIGMA_D_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 8)
+    ]
+    results_lr['Cíclico (A->D)x2'], times_lr['Cíclico (A->D)x2'] = run_experiment(
+        "[LR] Cíclico (A->D)x2", m, opt_list, train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
+    )
+
+    # 10. Cíclico (A->C)x2 (7+8+7+8)
+    m = copy.deepcopy(base_logistic)
+    opt_list = [
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 7),
+        (SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 8),
+        (optim.Adam(m.parameters(), lr=LR_ADAM, weight_decay=WD), 7),
+        (SIGMA_C_v2(m.parameters(), lr=LR_SIGMA, beta=0.9, weight_decay=WD), 8)
+    ]
+    results_lr['Cíclico (A->C)x2'], times_lr['Cíclico (A->C)x2'] = run_experiment(
+        "[LR] Cíclico (A->C)x2", m, opt_list, train_loader, test_loader, DEVICE, loss_fn, N_EPOCHS_LR_TOTAL
+    )
     
     # ========================================================================
-    # GERAÇÃO DE PLOTS E RESUMOS
+    # GERAÇÃO DE PLOTS
     # ========================================================================
     
-    # Gerar gráficos .pdf
     generate_nn_plots(results_nn, times_nn, N_EPOCHS_NN_PHASE1)
     generate_lr_plots(results_lr, times_lr, N_EPOCHS_LR_PHASE1)
     
-    # Imprimir resumos estatísticos no console
+    # [NOVO] Gera o gráfico combinado específico (Plot 3)
+    generate_combined_plot(results_nn, times_nn, results_lr, times_lr, N_EPOCHS_NN_PHASE1, N_EPOCHS_LR_PHASE1)
     
-    print("\n" + "="*80)
-    print("RESUMO FINAL - REDES NEURAIS (v2)")
-    print("="*80)
-    
-    print(f"\n{'Experimento':<25} | {'Acc Final':<10} | {'Loss Final':<11} | {'Tempo (s)':<10}")
-    print("-" * 65)
-    
-    for name in results_nn.keys():
-        acc_final = results_nn[name]['test_acc'][-1]
-        loss_final = results_nn[name]['test_loss'][-1]
-        time_final = times_nn[name]
-        print(f"{name:<25} | {acc_final:>9.2f}% | {loss_final:>10.4f} | {time_final:>9.2f}s")
-    
-    print("\n" + "-"*80)
-    print("ANÁLISE DE MELHORIAS (v2) (vs Híbrido SGD)")
-    print("-"*80)
-    
-    baseline_acc_nn = results_nn['Adam -> SGD+M']['test_acc'][-1]
-    acc_d_nn = results_nn['Adam -> SIGMA-D_v2']['test_acc'][-1]
-    acc_c_nn = results_nn['Adam -> SIGMA-C_v2']['test_acc'][-1]
-    acc_cyclic_nn = results_nn['Cíclico (A->C)x2']['test_acc'][-1]
-    
-    diff_d_nn = acc_d_nn - baseline_acc_nn
-    diff_c_nn = acc_c_nn - baseline_acc_nn
-    diff_cyclic_nn = acc_cyclic_nn - baseline_acc_nn
-    
-    print(f"Híbrido (Adam -> SIGMA-D_v2) vs (Adam -> SGD+M): {diff_d_nn:+.2f}% {'✓' if diff_d_nn > 0 else '✗'}")
-    print(f"Híbrido (Adam -> SIGMA-C_v2) vs (Adam -> SGD+M): {diff_c_nn:+.2f}% {'✓' if diff_c_nn > 0 else '✗'}")
-    print(f"Cíclico (A->C)x2            vs (Adam -> SGD+M): {diff_cyclic_nn:+.2f}% {'✓' if diff_cyclic_nn > 0 else '✗'}")
-
-    
-    print("\n" + "="*80)
-    print("RESUMO FINAL - REGRESSÃO LOGÍSTICA (v2) (PROBLEMA CONVEXO)")
-    print("="*80)
-    
-    print(f"\n{'Otimizador':<25} | {'Acc Final':<10} | {'Loss Final':<11} | {'Tempo (s)':<10}")
-    print("-" * 70)
-    
-    for name in results_lr.keys():
-        acc_final = results_lr[name]['test_acc'][-1]
-        loss_final = results_lr[name]['train_loss'][-1]
-        time_final = times_lr[name]
-        print(f"{name:<25} | {acc_final:>9.2f}% | {loss_final:>10.6f} | {time_final:>9.2f}s")
-
-    print("\n" + "-"*80)
-    print("ANÁLISE (v2) (Regressão Logística)")
-    print("-"*80)
-    
-    baseline_acc_lr = results_lr['Adam -> SGD+M']['test_acc'][-1]
-    acc_d_lr = results_lr['Adam -> SIGMA-D_v2']['test_acc'][-1]
-    acc_c_lr = results_lr['Adam -> SIGMA-C_v2']['test_acc'][-1]
-    
-    diff_d_lr = acc_d_lr - baseline_acc_lr
-    diff_c_lr = acc_c_lr - baseline_acc_lr
-    
-    print("Comparação Híbridos (vs Híbrido SGD):")
-    print(f"Híbrido (Adam -> SIGMA-D_v2) vs (Adam -> SGD+M): {diff_d_lr:+.2f}% {'✓' if diff_d_lr > 0 else '✗'}")
-    print(f"Híbrido (Adam -> SIGMA-C_v2) vs (Adam -> SGD+M): {diff_c_lr:+.2f}% {'✓' if diff_c_lr > 0 else '✗'}")
-
-    print("\n" + "="*80)
-    print("Benchmark v2 concluído com sucesso!")
-    print("="*80)
-
+    print("Benchmark Completo Finalizado!")
 
 if __name__ == "__main__":
     main()

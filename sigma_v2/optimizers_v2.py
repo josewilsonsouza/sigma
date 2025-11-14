@@ -9,7 +9,7 @@ You may obtain a copy of the License at
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+WITHOUTHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
@@ -27,7 +27,7 @@ Contém:
 import torch
 from torch.optim.optimizer import Optimizer
 from typing import Optional, Callable
-import math
+import math 
 
 # ============================================================================
 # OTIMIZADOR 1: SIGMA_D_v2 (Score Teorema 1 - Ponto D)
@@ -335,8 +335,70 @@ class SIGMA_C_v2(Optimizer):
                 
                 # --- Cálculo do Score σ (Teorema 2 - Ponto C) ---
                 if step > 1:
+                    
+                    # --- [MODIFICAÇÃO 2] CÁLCULO DO C1_INTEGRAL (E_GLOBAL) ---
+                    # Substitui o cálculo original de C1 pela fórmula 
+                    # analítica da E_global para a geometria L2 (f(x)=x^2).
+                    
+                    a = theta_prev
+                    b = theta_t
+
+                    # 1. Lidar com o caso degenerado (a ≈ b)
+                    # Se a e b são muito próximos, a média é apenas a si mesma
+                    diff_sq = (b - a).pow(2)
+                    is_degenerate = diff_sq < (eps**2) # Usar eps^2
+                    
+                    # 2. Calcular a fórmula analítica (caso não-degenerado)
+                    # Criar cópias seguras para evitar 0 em log/divisão
+                    a_safe = a.clone()
+                    b_safe = b.clone()
+                    # Garante que valores muito pequenos não sejam 0
+                    a_safe[a_safe.abs() < eps] = eps * torch.sign(a_safe[a_safe.abs() < eps]) + eps
+                    b_safe[b_safe.abs() < eps] = eps * torch.sign(b_safe[b_safe.abs() < eps]) + eps
+
+                    a2_plus_b2_safe = a.pow(2) + b.pow(2) + eps
+                    a3 = a.pow(3)
+                    b3 = b.pow(3)
+                    
+                    # Termo 1: T1 = 2(a+b)/3
+                    Term1_Eglobal = (2.0 * (a + b) / 3.0)
+                    
+                    # Denominador da fração: 3(b-a)^2 + eps
+                    denom_frac = 3.0 * diff_sq + eps
+                    
+                    # Numerador da fração (T2 + T3 + T4)
+                    
+                    # T2 = (a^3+b^3) * (log(2 / (a^2+b^2+eps)) - pi/2)
+                    T2_num = (a3 + b3) * (torch.log(2.0 / a2_plus_b2_safe) - (math.pi / 2.0))
+                    
+                    # T3 = 2 * (a^3 * log(|a|) + b^3 * log(|b|))
+                    T3_num = 2.0 * (a3 * torch.log(torch.abs(a_safe)) + b3 * torch.log(torch.abs(b_safe)))
+                    
+                    # T4 = 2 * (a^3 * atan(b/a) + b^3 * atan(a/b))
+                    T4_num = 2.0 * (a3 * torch.atan(b_safe / a_safe) + b3 * torch.atan(a_safe / b_safe))
+                    
+                    numerator_frac = T2_num + T3_num + T4_num
+                    
+                    # E_global (caso não degenerado)
+                    E_global_formula = Term1_Eglobal + (numerator_frac / denom_frac)
+                    
+                    # 3. Combinar os casos
+                    C1 = torch.where(
+                        is_degenerate,
+                        (a + b) / 2.0, # Se a ≈ b, a média é a média aritmética
+                        E_global_formula
+                    )
+                    
+                    # 4. Limpeza final de NaN/Inf (fallback seguro)
+                    C1 = torch.where(
+                        torch.isnan(C1) | torch.isinf(C1),
+                        (a + b) / 2.0,
+                        C1
+                    )
+                    # --- FIM DA MODIFICAÇÃO ---
+
+                    # Cálculo do two_C2 (permanece o mesmo)
                     denom_L = abs(loss_prev) + abs(loss_t) + eps
-                    C1 = (abs(loss_prev) * theta_t + abs(loss_t) * theta_prev) / denom_L
                     two_C2 = (2 * loss_t * loss_prev) / denom_L
                     
                     if second_order and 'grad_prev' in state:
